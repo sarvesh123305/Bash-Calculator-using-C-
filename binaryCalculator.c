@@ -5,73 +5,123 @@
 
 
 void convertCharArray(char *expression){
-  
-    int count1 = 0 , count2 = 0;
+    
+    int count1 = 0 ;
+    int flag = 1;
+    char ch;
     for(int i = 0 ; expression[i] != '\0' ;i++){
-        char ch = expression[i];
-
-        if(ch == '+' || ch == '-' || ch == '*' || ch == '/'){
-            count1++;
-            count1++;
+         ch = expression[i];
+        if(ch == '+' || ch == '-' || ch == '*' || ch == '/'||ch == '(' || ch == ')'){
+            
+            if(flag){
+                count1 += 2;
+            }
+            else{
+                count1++;
+            }
+            flag = 0;
         }
+        else{
+            flag = 1;
+        }
+
+
     }
-    printf("\n%d\n",++count1);
+    if(ch != '(' || ch != ')')
+    ++count1;
+
+    printf("\n%d\n",count1);
     char **ans = (char**)malloc(sizeof(char*)*count1)  ;
     int space = 0;
     char *str = (char*)malloc(sizeof(char)*space) ;
-    int k = 0,a = 0;
+    int k = 0, a = 0;
     strcpy(str,"");
      for(int i = 0 ; expression[i] != '\0' ; i++){
         char ch = expression[i];
-        if(ch == '+' || ch == '-' || ch == '*' || ch == '/'){
+        // if(ch == ' ')
+        // continue;
+        if(ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '(' || ch == ')'){
             ans[k] = (char*)malloc(sizeof(str));
             strcpy(ans[k++],str);
-            
-            strcpy(str,"");
+            a = 0;
             space = 1;
             str = realloc(str, space); // allocate new space
-            str[a++] = (char)(ch);
+            strcpy(str," ");
 
-            ans[k] = (char*)malloc(sizeof(str));
-            strcpy(ans[k++],str);
-            strcpy(str,"");
-            space = 1;
-            str = realloc(str, space); // allocate new space
+        
+            char operator[1] ;
+            operator[0] = ch;
+            ans[k] = (char*)malloc(sizeof(1)); 
+            strcpy(ans[k++],operator);
+            
 
         }
         else{
             str[a++] = (char)(ch);
             space++;              
             str = realloc(str, space); // allocate new space
-
         }
-     } 
-    //  printf("\n%s",str);
-    // for(int i = 0 ; expression[i] != '\0' ; i++){
-     
+     }
+            ans[k] = (char*)malloc(sizeof(str)); 
+            strcpy(ans[k++],str);
 
-        // if(ch == '+' || ch == '-' || ch == '*' || ch == '/'){
-            // strcpy(ans[k++],str);
-            // strcpy(str,"");
-            
-            // strcpy(str[i],ch);
-            // strcat(str, ch);
-
-            // strcpy(ans[k++],str);
-            // 
-        // }
-        // else{
-            // str[i] += ch;
-
-        // }
-    // }
-   
+    for(int i = 0 ; i < count1 ; i++){
+        printf("%s\t",ans[i]);
+    }
+      
 }
+
+void convertToPostfix(char *expression,int n){
+         Stack s;
+     initStack(&s,n);
+
+    static char ans[50];
+//priority () * / + - 
+   int k = 0;
+    for(int i = 0 ; expression[i] != '\0' ; i++){
+        char ch = expression[i];
+       
+        if(isAlphabetOrNumber(ch)){
+                 ans[k++] = expression[i];
+        }
+        else  if(ch == '(' )
+            {
+                push(&s,ch);
+            }
+        else if(ch == ')'){
+             while( top(s) != ' ' && top(s) != '(')
+            {
+                 ans[k++] = top(s);
+                pop(&s);
+             }
+             pop(&s);
+        }else{
+            char ch = expression[i];
+
+                while(top(s) != ' ' &&  precendence(top(s)) >= precendence(ch)){
+                 ans[k++] = top(s);
+                    pop(&s);
+                }
+                
+                push(&s,ch);
+        }
+
+    }
+    
+    while(!isEmpty(s)){
+        char ch = top(s);
+         ans[k++] = ch;
+
+        pop(&s);
+    }
+}
+ 
 
 void controlEverything(){
     // char* expression = inputExpression();
         // convertCharArray(expression);
-     convertCharArray("2+1*3");
+    //  convertCharArray("2+1*1");
+    //  convertToPostfix(expression,n);
 
 }
 
@@ -81,7 +131,6 @@ char* inputExpression(){
     printf("\nEnter a expression : ");
     
     char *expression = NULL;
-    printf (" enter a string of any length, whitespace is OK: ");
     scanf ("%m[^\n]%*c", &expression);
     printf ("\n str: %s\n\n", expression);
     return expression;
