@@ -4,7 +4,7 @@
 #include<string.h>
 
 
-void convertCharArray(char *expression){
+char** convertCharArray(char *expression){
     
     int count1 = 0 ;
     int flag = 1;
@@ -68,60 +68,88 @@ void convertCharArray(char *expression){
     for(int i = 0 ; i < count1 ; i++){
         printf("%s\t",ans[i]);
     }
-      
+      return ans;
+}
+int precendence(char ch){  
+    if(ch == '(')
+    return 0;
+   
+    if(ch == '+' || ch == '-')
+    return 1;
+
+     if(ch == '*' || ch == '/')
+    return 2;
+
+    return 0;
 }
 
-void convertToPostfix(char *expression,int n){
-         Stack s;
-     initStack(&s,n);
+void convertToPostfix(char **expression,int n){
+     charStack s;
+     initStackC(&s,n);
 
-    static char ans[50];
+     char **ans = (char**)malloc(sizeof(char*)*n);
 //priority () * / + - 
-   int k = 0;
-    for(int i = 0 ; expression[i] != '\0' ; i++){
-        char ch = expression[i];
+      int k = 0;
+      printf("\n");
+    for(int i = 0 ; i <= n ; i++){
+        char *ch = expression[i];
        
-        if(isAlphabetOrNumber(ch)){
-                 ans[k++] = expression[i];
-        }
-        else  if(ch == '(' )
-            {
-                push(&s,ch);
-            }
-        else if(ch == ')'){
-             while( top(s) != ' ' && top(s) != '(')
-            {
-                 ans[k++] = top(s);
-                pop(&s);
-             }
-             pop(&s);
-        }else{
-            char ch = expression[i];
+        //  if(ch[i] == '+')
 
-                while(top(s) != ' ' &&  precendence(top(s)) >= precendence(ch)){
-                 ans[k++] = top(s);
-                    pop(&s);
+        //  printf("%s\t",ch);
+        //  if((strcmp("+",ch) && strcmp("-",ch) && strcmp("/",ch) && strcmp("*",ch) && strcmp("(",ch) && strcmp(")",ch)  )  )
+        //  {
+        //     ans[k] = (char*)malloc(sizeof(ch));
+        //     strcpy(ans[k++],ch);
+        //  }
+        //   if(!strcmp("(",ch)){
+        //         printf("Yes");
+        //         // ( - 0  , * - 4  , / - 3  
+        //         // + - 2 , - - 1
+                // pushC(&s,'(');   
+        //  }
+        //    if(!strcmp(")",ch))
+        //     {
+        //          while( topC(s) !=  ' ' && topC(s) != '(')
+        //     {
+        //         char temp = topC(s);
+        //         char temp1[1] ;
+        //          temp1[0] = temp;
+        //          ans[k] = (char*)malloc(sizeof(temp));
+        //         strcpy(ans[k++],temp1);
+        //         popC(&s);
+        //      }
+        //        popC(&s);
+        //     }
+            // else{
+            // char ch = expression[i];
+            // char *xyz = "+";
+            char abc = ch[0];
+            // printf("%c\t",abc);
+                while(topC(s) != ' ' &&  precendence(topC(s)) >= precendence(abc)){
+                    ans[k] = (char*)malloc(sizeof(topC(s)));
+                    char temp[1] ;
+                    temp[0] = topC(s);
+                    strcpy(ans[k++],temp);
+                    popC(&s);
                 }
-                
-                push(&s,ch);
-        }
-
+                pushC(&s,abc);
     }
     
-    while(!isEmpty(s)){
+    while(!isEmptyC(s)){
         char ch = top(s);
          ans[k++] = ch;
-
         pop(&s);
     }
+    // displayC(s);
 }
  
 
 void controlEverything(){
     // char* expression = inputExpression();
         // convertCharArray(expression);
-    //  convertCharArray("2+1*1");
-    //  convertToPostfix(expression,n);
+    char **temp = convertCharArray("2+(3*1)");
+     convertToPostfix(temp,7);
 
 }
 
@@ -162,18 +190,21 @@ void displayS(Stack s){
    }
 }
 
-void push(Stack* s){
-    
+Node* top(Stack s){
     Node* newnode = (Node*)malloc(sizeof(Node));
-    newnode -> data = 1;
+    newnode -> data = -1;
     newnode -> next = NULL;
-    Node* newnode1 = (Node*)malloc(sizeof(Node));
-    newnode1 -> data = 2;
-    newnode1 -> next = NULL;
-    newnode -> next = newnode1;
+    if(!s.top)
+    return newnode;
+    return s.top -> data;
+}
 
-    NodeforStack* abc = (NodeforStack*)malloc(sizeof(Node));
-    abc -> data = newnode;
+
+void push(Stack* s,Node* data){
+    
+
+    NodeforStack* abc = (NodeforStack*)malloc(sizeof(NodeforStack));
+    abc -> data = data;
     abc -> up = NULL;
 
     if(isEmpty(*s))

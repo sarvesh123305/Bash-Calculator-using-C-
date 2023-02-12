@@ -1,2 +1,2 @@
-gcc binaryCalculator.c  main.c
+gcc binaryCalculator.c  main.c characterStack/stack.c
 ./a.out
