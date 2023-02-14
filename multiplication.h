@@ -1,0 +1,1 @@
+void multiply(Node*,Node*);
