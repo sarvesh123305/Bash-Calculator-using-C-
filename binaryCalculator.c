@@ -96,56 +96,60 @@ void convertToPostfix(char **expression,int n){
       printf("\n");
     for(int i = 0 ; i <= n ; i++){
         char *ch = expression[i];
-       
-        //  if(ch[i] == '+')
+    //    printf("%s",ch);
 
-        //  printf("%s\t",ch);
-        //  if((strcmp("+",ch) && strcmp("-",ch) && strcmp("/",ch) && strcmp("*",ch) && strcmp("(",ch) && strcmp(")",ch)  )  )
+         if((strcmp("+",ch) && strcmp("-",ch) && strcmp("/",ch) && strcmp("*",ch) && strcmp("(",ch) && strcmp(")",ch)  )  )
          {
-            // ans[k] = (char*)malloc(sizeof(ch));
-            // strcpy(ans[k++],ch);
+            ans[k] = (char*)malloc(sizeof(ch));
+            strcpy(ans[k++],ch);
          }
-        //   else if(strcmp("(",ch)){
+           if(strcmp("(",ch))
+           {
+               
+                pushC(&s,'(');   
+         }
+           else if(!strcmp(")",ch))
+            {
+                 while( topC(s) !=  ' ' && topC(s) != '(')
+                 {
+                char temp = topC(s);
+                char temp1[1] ;
+                 temp1[0] = temp;
+                 ans[k] = (char*)malloc(sizeof(temp));
+                strcpy(ans[k++],temp1);
+                popC(&s);
+              }
+               popC(&s);
+            }
+            else{
+            char abc = ch[0];
+            // printf("%c\t",abc);
+                while(topC(s) != ' ' &&  precendence(topC(s)) >= precendence(abc)){
+                    ans[k] = (char*)malloc(sizeof(topC(s)));
+                    char temp[1] ;
+                    temp[0] = topC(s);
+                    strcpy(ans[k++],temp);
+                    popC(&s);
+                }
+                pushC(&s,abc);
+    }
+    
+    for(int i = 0 ; i <= n ;i++){
                 // printf("Yes");
-                // ( - 0  , * - 4  , / - 3  
-                // + - 2 , - - 1
-                // pushC(&s,'(');   
-        //  }
-        //    else if(!strcmp(")",ch))
-        //     {
-        //          while( topC(s) !=  ' ' && topC(s) != '(')
-        //          {
-        //         char temp = topC(s);
-        //         char temp1[1] ;
-        //          temp1[0] = temp;
-        //          ans[k] = (char*)malloc(sizeof(temp));
-        //         strcpy(ans[k++],temp1);
-        //         popC(&s);
-        //       }
-        //        popC(&s);
-        //     }
-    //         else{
-    //         char abc = ch[0];
-    //         // printf("%c\t",abc);
-    //             while(topC(s) != ' ' &&  precendence(topC(s)) >= precendence(abc)){
-    //                 ans[k] = (char*)malloc(sizeof(topC(s)));
-    //                 char temp[1] ;
-    //                 temp[0] = topC(s);
-    //                 strcpy(ans[k++],temp);
-    //                 popC(&s);
-    //             }
-    //             pushC(&s,abc);
-    // }
+
+        printf("%s\n",ans[i]);
+        // printf("\n");
+    }
 
 }
-//  while(!isEmptyC(s)){
-//         char ch = topC(s);
-//         ans[k] = (char*)malloc(sizeof(topC(s)));
-//         char temp[1] ;
-//         temp[0] = topC(s);
-//         strcpy(ans[k++],temp);
-//         popC(&s);
-//     }
+ while(!isEmptyC(s)){
+        char ch = topC(s);
+        ans[k] = (char*)malloc(sizeof(topC(s)));
+        char temp[1] ;
+        temp[0] = topC(s);
+        strcpy(ans[k++],temp);
+        popC(&s);
+    }
 
 
 }
@@ -154,7 +158,13 @@ void controlEverything(){
     // char* expression = inputExpression();
         // convertCharArray(expression);
     char **temp = convertCharArray("2+3*1");
-     convertToPostfix(temp,7);
+    // printf("\n%s",temp[0]);
+    // printf("\n%s",temp[1]);
+    // printf("\n%s",temp[2]);
+    // printf("\n%s",temp[3]);
+    // printf("\n%s",temp[4]);
+  
+     convertToPostfix(temp,4);
 
 }
 
