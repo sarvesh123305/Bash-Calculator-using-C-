@@ -30,7 +30,8 @@ char** convertCharArray(char *expression){
     if(ch != '(' || ch != ')')
     ++count1;
 
-    printf("\n%d\n",count1);
+    // printf("\n%d\n",count1);
+
     char **ans = (char**)malloc(sizeof(char*)*count1)  ;
     int space = 0;
     char *str = (char*)malloc(sizeof(char)*space) ;
@@ -83,11 +84,14 @@ int precendence(char ch){
     return 0;
 }
 
+int isNumber(char *ch){
+return (strcmp("+",ch) && strcmp("-",ch) && strcmp("/",ch) && strcmp("*",ch) && strcmp("(",ch) && strcmp(")",ch)  );
+}
 
-void convertToPostfix(char **expression,int n){
+char** convertToPostfix(char **expression,int n){
      charStack s;
     //  initStackC(&s,n);
-     initStackC(&s,10);
+     initStackC(&s,n+1);
 
 
      char **ans = (char**)malloc(sizeof(char*)*n);
@@ -96,16 +100,17 @@ void convertToPostfix(char **expression,int n){
       printf("\n");
     for(int i = 0 ; i <= n ; i++){
         char *ch = expression[i];
-    //    printf("%s",ch);
+    //    printf("%s\n",ch);
 
-         if((strcmp("+",ch) && strcmp("-",ch) && strcmp("/",ch) && strcmp("*",ch) && strcmp("(",ch) && strcmp(")",ch)  )  )
+         if(isNumber(ch))
          {
             ans[k] = (char*)malloc(sizeof(ch));
             strcpy(ans[k++],ch);
+            // printf("%s",ans[k-1]);
          }
-           if(strcmp("(",ch))
+         else  if(!strcmp("(",ch))
            {
-               
+            // printf("\nCheck\n");
                 pushC(&s,'(');   
          }
            else if(!strcmp(")",ch))
@@ -133,14 +138,7 @@ void convertToPostfix(char **expression,int n){
                 }
                 pushC(&s,abc);
     }
-    
-    for(int i = 0 ; i <= n ;i++){
-                // printf("Yes");
-
-        printf("%s\n",ans[i]);
-        // printf("\n");
-    }
-
+   
 }
  while(!isEmptyC(s)){
         char ch = topC(s);
@@ -150,22 +148,93 @@ void convertToPostfix(char **expression,int n){
         strcpy(ans[k++],temp);
         popC(&s);
     }
+printf("\nPrinting Postfix :\n");
+ for(int i = 0 ; i <= 4 ;i++){
+                // printf("Yes");
+        // printf("%s\n",ans[i]);
+        // printf("\n");
+    }
+    return ans;
 
 
 }
+
+ Node* postfixEvaluationWithCreatingLinkedLists(char **ans,int n){
+    
+    Stack s;
+    initStack(&s);
+
+    List result;
+    initList(&result);
+    // printf("\nPrinting Postfix Evaluation\n");
+    for(int i = 0 ; i <= n; i++){
+        printf("%s\t",ans[i]);
+
+        char *ch = ans[i];
+        
+        if(isNumber(ch)){
+            
+            List l1;
+            initList(&l1);
+            for(int i = 0 ; i < sizeof(ch)/sizeof(char*);i++){
+                int num = ch[i] - '0';
+                append(&l1,num);
+            }
+            // display(l1);
+            push(&s,l1);
+            // printf("\nsize = %d\n",getSizeOfStack(s));
+        }
+        else 
+        {
+             Node* b = pop(&s) ;
+            Node* a = pop(&s);
+            // Node* c = pop(&s);
+
+            //  display(b);
+            //  display(a);
+            //  display(c);
+
+
+            if(!strcmp("*",ch)){
+                result = multiply(b,a);
+                // display(result);
+                // display(multiply(b,a));
+            }
+            else if(!strcmp("/",ch)){
+            //  multiply(b,a);
+            }
+             else if(!strcmp("+",ch)){
+                result = addTwoLinkedLists(b,a);
+            }
+            else if(!strcmp("-",ch)){
+                result =  subtractTwoLinkedLists(b,a);
+            }
+                push(&s,result);
+        }
+    }
+    display(result);
+    return result;
+
+}
+
 
 void controlEverything(){
     // char* expression = inputExpression();
         // convertCharArray(expression);
     char **temp = convertCharArray("2+3*1");
-    // printf("\n%s",temp[0]);
-    // printf("\n%s",temp[1]);
-    // printf("\n%s",temp[2]);
-    // printf("\n%s",temp[3]);
-    // printf("\n%s",temp[4]);
-  
-     convertToPostfix(temp,4);
 
+  
+    char **ans =  convertToPostfix(temp,4);
+//    for(int i = 0 ; i <= 4 ;i++){
+//                 // printf("Yes");
+//         printf("%s\n",ans[i]);
+//         // printf("\n");
+//     }
+
+    Node* stora = postfixEvaluationWithCreatingLinkedLists(ans,4);
+        // printf("Answer\n");
+    
+    // display(stora);
 }
 
 
@@ -197,7 +266,7 @@ void displayS(Stack s){
    while(temp){
     Node* go = temp -> data;
     while(go){
-        printf("%d",go -> data);
+        // printf("%d",go -> data);
         go = go -> next;
     }
     printf("\n");
@@ -218,21 +287,44 @@ Node* top(Stack s){
 void push(Stack* s,Node* data){
     
 
-    NodeforStack* abc = (NodeforStack*)malloc(sizeof(NodeforStack));
-    abc -> data = data;
-    abc -> up = NULL;
+    NodeforStack* newnode = (NodeforStack*)malloc(sizeof(NodeforStack));
+    newnode -> data = data;
+    newnode -> up = NULL;
 
     if(isEmpty(*s))
     {
-        s -> top = abc;
+        s -> top = newnode;
     }
     else
     {
-        s -> top -> up = abc;
-        s -> top = abc;
+        newnode -> up = s -> top;
+        s -> top = newnode;
     }
-     displayS(*s);
+    return ;
 }
 
-// Node* pop(Stack*);
+Node* pop(Stack *s){
+    if(isEmpty(*s)){
+        return NULL;
+    }
+    NodeforStack* deleteNode = s -> top;
+    
+    Node* actualList = deleteNode -> data;
+    // free(deleteNode);
+    // display(actualList);
+    s -> top = s -> top -> up;
+    return actualList;
+}
 // Node* top(Stack);
+
+int getSizeOfStack(Stack s){
+    if(isEmpty(s))
+    return 0;
+    int ct = 0;
+    NodeforStack* temp = s.top;
+    while(temp){
+        ct++;
+        temp = temp -> up;
+    }
+    return ct;
+}

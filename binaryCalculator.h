@@ -1,6 +1,8 @@
 // #include "addition.h"
-#include "linkedList.h"
+// #include "linkedList.h"
 // #include "subtraction.h"
+#include "multiplication.h"
+
 #include "characterStack/stack.h"
 typedef struct NodeforStack{
     Node* data;
@@ -16,8 +18,11 @@ typedef struct Stack{
 
 char* inputExpression();
 void controlEverything();
+Node* postfixEvaluationWithCreatingLinkedLists(char**,int);
+
 
 void initStack(Stack*);
 void push(Stack*,Node*);
 Node* pop(Stack*);
 Node* top(Stack);
+int getSizeOfStack(Stack);

@@ -1,3 +1,5 @@
-#include "linkedList.h"
+// #include "linkedList.h"
+#include "addition.h"
+#include "subtraction.h"
 
-void multiply(Node*,Node*);
+Node* multiply(Node*,Node*);

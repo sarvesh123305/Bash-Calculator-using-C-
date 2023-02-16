@@ -49,9 +49,25 @@ void reverse(List *L1){
 void display(List head){
     if(!head)
     return ;
+    printf("\n");
     Node* temp = head;
     while(temp){
         printf("%d\t",temp -> data);
         temp = temp -> next;
     }
+    printf("\n");
+
+}
+
+
+int getSize(List head){
+    if(!head){
+        return 0;
+    }
+    int ct = 0;
+    while(head){
+        ct++;
+        head = head -> next;
+    }
+    return ct;
 }
