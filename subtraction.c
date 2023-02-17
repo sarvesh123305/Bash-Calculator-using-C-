@@ -27,9 +27,31 @@ List subtractTwoLinkedLists(List L1,List L2){
     List L3;
     initList(&L3);
 
-    Node* head1 = L1;
-    Node* head2 = L2;
+    int sizeOfList1 = getSize(L1);
+    int sizeOfList2 = getSize(L2);
 
+    // printf("%d",sizeOfList2);
+    Node* head1 = NULL;
+    Node* head2 = NULL;
+    if(sizeOfList2 > sizeOfList1){
+        //negative answer
+        head1 = L2;
+        head2 = L1;
+    }
+    else if(sizeOfList1 > sizeOfList2){
+        head1 = L1;
+        head2 = L2;
+    }
+    else{
+        Node* temporary1 = L1;
+        Node* temporary2 = L2;
+        while(temporary1 -> data > temporary2 -> data){
+            temporary1 = temporary1 -> next;
+            temporary2 = temporary2 -> next;
+        }
+        
+
+    }
     reverse(&head1);
     reverse(&head2);
 

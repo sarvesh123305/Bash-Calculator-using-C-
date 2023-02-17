@@ -68,22 +68,20 @@ while(secondNo){
 
 List result ;
 initList(&result);
+append(&result,0);
     // printf("sadasdasda %d\n",n);
 
-if(n == 1){
-    append(&result,3);
-}
 
-for(int i = 1 ; i < n ; i++){
+for(int i = 0 ; i < n ; i++){
     // printf("sadasdasda\n");
     // display(answer[i]);
     printf("\n");
-    if(i == 1){
-        result = addTwoLinkedLists(answer[i],answer[i-1]);
-    //     // i++;
-    }else{
+    // if(i == 0){
+    //     result = addTwoLinkedLists(answer[i],answer[i-1]);
+    // //     // i++;
+    // }else{
         result = addTwoLinkedLists(answer[i],result);
-    }
+    // }
 }
 // printf("****");
 // display(result);

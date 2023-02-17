@@ -33,7 +33,8 @@ int main(){
 
     // display(L2);
 
-    // multiply(L1,L2);
+    // Node* result = multiply(L1,L2);
+    // display(result);
     // Stack s;
     // initStack(&s);
     // push(&s);

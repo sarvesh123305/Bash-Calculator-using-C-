@@ -8,6 +8,9 @@ List addTwoLinkedLists(List L1,List L2){
     Node* head1 = L1;
     Node* head2 = L2;
 
+    // display(L1);
+    // display(L2);
+
     reverse(&head1);
     reverse(&head2);
     int carry = 0 ;
