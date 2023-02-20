@@ -29,7 +29,7 @@ char** convertCharArray(char *expression,int *n){
     if(ch != '(' || ch != ')')
     ++count1;
 
-    // printf("\n%d\n",count1);
+    printf("\n%d\n",count1);
 
     char **ans = (char**)malloc(sizeof(char*)*count1)  ;
     int space = 0;
@@ -99,15 +99,15 @@ char** convertToPostfix(char **expression,int n){
     //  initStackC(&s,n);
      initStackC(&s,n+1);
 
-
      char **ans = (char**)malloc(sizeof(char*)*n);
+
 // //priority () * / + - 
       int k = 0;
-      printf("\n");
+      printf("\nCOnversion\n");
     for(int i = 0 ; i <= n ; i++){
         char *ch = expression[i];
-    //    printf("%s\n",ch);
-
+       printf("%s\n",ch);
+    
          if(isNumber(ch))
          {
             ans[k] = (char*)malloc(sizeof(ch));
@@ -148,19 +148,21 @@ char** convertToPostfix(char **expression,int n){
 }
  while(!isEmptyC(s)){
         char ch = topC(s);
-        ans[k] = (char*)malloc(sizeof(topC(s)));
-        char temp[1] ;
-        temp[0] = topC(s);
-        strcpy(ans[k++],temp);
+        printf("\n\n%c",ch);
+        printf("%d",k);
+        // ans[k] = (char*)malloc(sizeof(char));
+        // char temp[1] ;
+        // temp[0] = topC(s);
+        // strcpy(ans[k++],temp);
         popC(&s);
     }
-printf("\nPrinting Postfix :\n");
- for(int i = 0 ; i <= 4 ;i++){
-                // printf("Yes");
-        // printf("%s\n",ans[i]);
-        // printf("\n");
-    }
-    return ans;
+// printf("\nPrinting Postfix :\n");
+//  for(int i = 0 ; i <= 4 ;i++){
+//                 // printf("Yes");
+//         // printf("%s\n",ans[i]);
+//         // printf("\n");
+//     }
+//     return ans;
 
 
 }
@@ -239,7 +241,7 @@ void controlEverything(){
     // char* expression = inputExpression();
         // convertCharArray(expression);
         int n = 0;
-    char **temp = convertCharArray("221-12",&n);
+    char **temp = convertCharArray("5313541541451541351+3421245134212451514513523534",&n);
 
     printf("\n");
     for(int i = 0 ; i <= n-1 ;i++){
@@ -252,7 +254,7 @@ void controlEverything(){
 //         // printf("\n");
     // }
 
-    Node* storageOfAnswer = postfixEvaluationWithCreatingLinkedLists(ans,n-1);
+    // Node* storageOfAnswer = postfixEvaluationWithCreatingLinkedLists(ans,n-1);
         // printf("Answer\n");
     
     // display(storageOfAnswer);
