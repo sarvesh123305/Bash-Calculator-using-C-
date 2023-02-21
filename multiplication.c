@@ -12,8 +12,11 @@ reverse(&second);
 Node* firstNo = first;
 Node* secondNo = second;
 
+// printf("In Mul");
 // display(first);
 // display(second);
+// printf("out Mul");
+
 
 
 int n = getSize(secondNo);
@@ -46,9 +49,7 @@ while(secondNo){
         append(&answer[row],digit);
         firstNo = firstNo -> next;
     }
-   
-   
-    
+
     if(carry){
         append(&answer[row],carry);
         carry = 0;
@@ -75,7 +76,7 @@ append(&result,0);
 for(int i = 0 ; i < n ; i++){
     // printf("sadasdasda\n");
     // display(answer[i]);
-    printf("\n");
+    // printf("\n");
     // if(i == 0){
     //     result = addTwoLinkedLists(answer[i],answer[i-1]);
     // //     // i++;

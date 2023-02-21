@@ -51,7 +51,7 @@ char** convertCharArray(char *expression,int *n){
             a = 0;
             space = 1;
             str = realloc(str, space); // allocate new space
-            for(int i = 0 ; i < sizeof(str);i++){
+            for(int i = 0 ;  str[i] != '\0' ;i++){
                 str[i] = '\0';
             }
 
@@ -148,12 +148,12 @@ char** convertToPostfix(char **expression,int n){
 }
  while(!isEmptyC(s)){
         char ch = topC(s);
-        printf("\n\n%c",ch);
-        printf("%d",k);
-        // ans[k] = (char*)malloc(sizeof(char));
-        // char temp[1] ;
-        // temp[0] = topC(s);
-        // strcpy(ans[k++],temp);
+        // printf("\n\n%c",ch);
+        // printf("%d",k);
+        ans[k] = (char*)malloc(sizeof(char));
+        char temp[1] ;
+        temp[0] = topC(s);
+        strcpy(ans[k++],temp);
         popC(&s);
     }
 // printf("\nPrinting Postfix :\n");
@@ -162,7 +162,7 @@ char** convertToPostfix(char **expression,int n){
 //         // printf("%s\n",ans[i]);
 //         // printf("\n");
 //     }
-//     return ans;
+    return ans;
 
 
 }
@@ -241,7 +241,7 @@ void controlEverything(){
     // char* expression = inputExpression();
         // convertCharArray(expression);
         int n = 0;
-    char **temp = convertCharArray("5313541541451541351+3421245134212451514513523534",&n);
+    char **temp = convertCharArray("4332431313413+22232123124*425311234",&n);
 
     printf("\n");
     for(int i = 0 ; i <= n-1 ;i++){
@@ -253,8 +253,8 @@ void controlEverything(){
         // printf("%s\n",ans[i]);
 //         // printf("\n");
     // }
-
-    // Node* storageOfAnswer = postfixEvaluationWithCreatingLinkedLists(ans,n-1);
+// 
+    Node* storageOfAnswer = postfixEvaluationWithCreatingLinkedLists(ans,n-1);
         // printf("Answer\n");
     
     // display(storageOfAnswer);

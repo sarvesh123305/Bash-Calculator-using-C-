@@ -45,13 +45,32 @@ List subtractTwoLinkedLists(List L1,List L2){
     else{
         Node* temporary1 = L1;
         Node* temporary2 = L2;
-        while(temporary1 -> data > temporary2 -> data){
+        int flag = 0;
+        while(temporary1 && temporary2){
+            
+            if(temporary1 -> data > temporary2 -> data){
+                    flag = 1;
+                    break;
+            }
+            else if(temporary2 -> data > temporary2 -> data){
+                flag = 2;
+                break;
+            }
             temporary1 = temporary1 -> next;
             temporary2 = temporary2 -> next;
         }
-        
-
+        // printf("\nFLag  :%d\n",flag) ;
+        if(flag == 1){
+            head1 = L1;
+            head2 = L2;
+        }
+        else {
+            head2 = L1;
+            head1 = L2;
+        }
     }
+    // display(head1);
+    
     reverse(&head1);
     reverse(&head2);
 
@@ -66,9 +85,9 @@ List subtractTwoLinkedLists(List L1,List L2){
         if(head2)
             val2 = head2 -> data;
         diff = (val1 - val2 - borrow);
-    printf("val1: %d val2 : %d borrow : %d\t",val1 , val2,borrow);
+    // printf("val1: %d val2 : %d borrow : %d\t",val1 , val2,borrow);
 
-    printf("\n");
+    // printf("\n");
         int temp = borrow;
         
         if(borrow == 1)
@@ -89,8 +108,7 @@ List subtractTwoLinkedLists(List L1,List L2){
       } 
       reverse(&L3);
       removePreceedingZeros(&L3);
-      display(L3);
-    
+    //   display(L3);
       return L3;
 }
 

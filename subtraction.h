@@ -6,3 +6,4 @@ typedef Node* List;
 
 List subtractTwoLinkedLists(List L1,List L2);
 #endif
+
