@@ -13,14 +13,13 @@ int main(){
     initList(&L2);
    
 
-
-    append(&L1,3);
+    append(&L1,2);
     append(&L1,0);
 
 
   
-    append(&L2,2);
-    // append(&L2,0);
+    append(&L2,1);
+    append(&L2,0);
 
     divideTwoLinkedLists(L1,L2);
     // append(&L2,1);

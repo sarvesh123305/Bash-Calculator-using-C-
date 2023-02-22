@@ -43,6 +43,8 @@ void reverse(List *L1){
     }
     *L1 = prev;
     return;
+    //0 - 3
+    //0<-3
 }
 
 
