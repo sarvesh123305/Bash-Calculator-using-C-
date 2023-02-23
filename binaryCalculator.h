@@ -2,6 +2,7 @@
 // #include "linkedList.h"
 // #include "subtraction.h"
 #include "multiplication.h"
+#include "division.h"
 
 #include "characterStack/stack.h"
 typedef struct NodeforStack{

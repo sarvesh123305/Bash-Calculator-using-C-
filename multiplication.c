@@ -5,14 +5,16 @@
 // #include "subtract.h"
 
 
-Node* multiply(Node* first,Node* second){
+Node* multiply(Node* tempFirst,Node* tempSecond){
+    Node* first = tempFirst;
+    Node* second = tempSecond;
+    reverse(&first);
+    reverse(&second);
 
-reverse(&first);
-reverse(&second);
-Node* firstNo = first;
-Node* secondNo = second;
+    
+    Node* firstNo = first;
+    Node* secondNo = second;
 
-// printf("In Mul");
 // display(first);
 // display(second);
 // printf("out Mul");
@@ -23,8 +25,6 @@ int n = getSize(secondNo);
 // printf("\nsize = %d\n",n);
 
 Node* answer[n] ;
-
-
 
     int carry = 0;
 // generic linked list  
@@ -70,7 +70,6 @@ while(secondNo){
 List result ;
 initList(&result);
 append(&result,0);
-    // printf("sadasdasda %d\n",n);
 
 
 for(int i = 0 ; i < n ; i++){
