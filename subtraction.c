@@ -2,37 +2,14 @@
 #include<stdlib.h>
 #include "subtraction.h"
 
-void removePreceedingZeros(List *L){
-    if(!(*L))
-    return ;
-
-    Node* temp = *L;
-
-    //Checking for preeceding zeros and removing it Eg : 0012 -> 12
-    //This would make our subtraction task easy
-
-    while(temp -> next){
-        if(temp -> data == 0)
-        {
-            Node* deleteNode = temp;
-            temp = temp -> next;
-            free(deleteNode);
-        }
-        else{
-            break;  // Break the loop when there are no preceding zeros
-        }
-    }
-    *L = temp;
-
-    return ;
-}
 
 
 List subtractTwoLinkedLists(List L1,List L2){
 
     List L3;
     initList(&L3);
-    // L3 -> sign = '-';
+
+    char sign = '+';
 
     //My Function is implemented with always subtracting smaller no from bigger no
     //So if first no is smaller we would swap nos 
@@ -47,7 +24,7 @@ List subtractTwoLinkedLists(List L1,List L2){
 
     if(sizeOfList2 > sizeOfList1){
         //negative answer
-        L3 -> sign = '-';
+        sign = '-';
         head1 = L2;
         head2 = L1;
     }
@@ -68,8 +45,8 @@ List subtractTwoLinkedLists(List L1,List L2){
                     flag = 1;           // Indicates List 1 is greater// Indicates List 1 is greater
                     break;
             }
-            else if(temporary2 -> data > temporary2 -> data){
-                    // L3 -> sign = '-';
+            else if(temporary2 -> data > temporary1 -> data){
+                    sign = '-';
                     flag = 2;           // Indicates List 2 is greater
                     break;
             }
@@ -113,8 +90,12 @@ List subtractTwoLinkedLists(List L1,List L2){
             diff = (val1 - val2 - temp);
             borrow = 1;
         }
-
-        append(&L3,diff%10);
+        // if(isEmptyLinkedList(L3)){
+            // append(&L3,diff%10);
+        // }
+        // else{
+            append(&L3,diff%10);
+        // }
 
         if(head1)
             head1 = head1 -> next;
@@ -123,6 +104,7 @@ List subtractTwoLinkedLists(List L1,List L2){
       } 
       reverse(&L3);
       removePreceedingZeros(&L3);
+      L3 -> sign = sign;
       return L3;
 }
 

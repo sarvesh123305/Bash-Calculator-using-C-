@@ -215,26 +215,32 @@ char** convertToPostfix(char **expression,int n){
 
 
             if(!strcmp("*",ch)){
-                // if(a -> sign == '+' && b -> sign == '+'){
-                //     result -> sign = '+';
-                // }else if(a -> sign == '-' && b -> sign == '+' || a -> sign == '+' && b -> sign == '-')
-                // {
-                //     result -> sign = '-';
-                // }
-                // else{
-                //     result -> sign = '+';
-                // }
                 result = multiply(a,b); 
+                if(a -> sign == '+' && b -> sign == '+'){
+                    result -> sign = '+';
+                }else if(a -> sign == '-' && b -> sign == '+' || a -> sign == '+' && b -> sign == '-')
+                {
+                    result -> sign = '-';
+                }
+                 else{
+                    result -> sign = '+';
+                }
                 // display(result);
 
             }
             else if(!strcmp("/",ch)){
                result =  divideTwoLinkedLists(a,b);
-            }
+               if((a -> sign == '-' && b -> sign  == '+' ) || (a -> sign == '+' && b -> sign == '-')){
+                    result -> sign = '-';
+               }
+               else{
+                result -> sign = '+';   
+               }
+                }
              else if(!strcmp("+",ch)){
                  if((a -> sign == '+' && b -> sign == '+')  ){     
-                    result -> sign = '+';
                     result = addTwoLinkedLists(a,b);
+                    result -> sign = '+';
                  }               
                 else if((a -> sign == '-' && b -> sign == '+') || (a -> sign == '+' && b -> sign == '-'))
                 {
@@ -247,9 +253,8 @@ char** convertToPostfix(char **expression,int n){
                 // printf("Sign %c" , result -> sign);
             }
             else if(!strcmp("-",ch)){
-                //311-312
+
                 if(a -> sign == '+' && b -> sign == '+'){
-                    printf("Ye ki re");     
                     result = subtractTwoLinkedLists(a,b);
                  }               
                 else if((a -> sign == '-' && b -> sign == '+') || (a -> sign == '+' && b -> sign == '-'))
@@ -284,10 +289,10 @@ void controlEverything(){
     // char* expression = inputExpression();
         // convertCharArray(expression);
         int n = 0;
-    char **temp = convertCharArray("311-312",&n);
+    char **temp = convertCharArray("312*122+121/2-3",&n);
 
     printf("\n");
-    // for(int i = 0 ; i <= n-1 ;i++){
+    // for(int i = 0 ; i <= n-1 ;i++){312*122+121/2-3
         // printf("%s\t",temp[i]);
     // }
     char **ans =  convertToPostfix(temp,n-1);

@@ -16,6 +16,8 @@ void reverse(List *L1);
 void display(List head);
 int getSize(List head);
 Node* top(List head);
+int isEmptyLinkedList(List);
+void removePreceedingZeros(List*);
 
 #endif
 

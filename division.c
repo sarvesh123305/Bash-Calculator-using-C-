@@ -62,6 +62,10 @@ int compareLinkedLists(List mulResult,List Number){
     }
 }
 Node* divideTwoLinkedLists(Node* first,Node* second){
+
+    removePreceedingZeros(&first);
+    removePreceedingZeros(&second);
+
     int size1 = getSize(first);
     int size2 = getSize(second);
     
@@ -76,7 +80,16 @@ Node* divideTwoLinkedLists(Node* first,Node* second){
             exit(0);
         }
     }
+    
+    int canWeDivide = compareLinkedLists(first,second);
+    switch(canWeDivide){
+        case -1 :
+        case 2 : 
+                 append(&result,0);
+                 return result;
+                 break;
 
+    }
     for(int i = 1 ;; i++){
 
         Node* firstNo  = first;

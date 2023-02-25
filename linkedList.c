@@ -75,3 +75,32 @@ int getSize(List head){
     }
     return ct;
 }
+
+int isEmptyLinkedList(List head){
+    return head == NULL;
+}
+
+void removePreceedingZeros(List *L){
+    if(!(*L))
+    return ;
+
+    Node* temp = *L;
+
+    //Checking for preeceding zeros and removing it Eg : 0012 -> 12
+    //This would make our subtraction task easy
+
+    while(temp -> next){
+        if(temp -> data == 0)
+        {
+            Node* deleteNode = temp;
+            temp = temp -> next;
+            free(deleteNode);
+        }
+        else{
+            break;  // Break the loop when there are no preceding zeros
+        }
+    }
+    *L = temp;
+
+    return ;
+}
