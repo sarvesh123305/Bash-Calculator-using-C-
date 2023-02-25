@@ -25,5 +25,5 @@ Node* postfixEvaluationWithCreatingLinkedLists(char**,int);
 void initStack(Stack*);
 void push(Stack*,Node*);
 Node* pop(Stack*);
-Node* top(Stack);
+Node* getTop(Stack);
 int getSizeOfStack(Stack);

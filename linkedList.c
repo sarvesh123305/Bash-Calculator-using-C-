@@ -16,6 +16,7 @@ void append(List* head,int data){
     newnode -> data = data;
     newnode -> next = NULL;
     if(!(*head)){
+        newnode -> sign = '+';
         *head = newnode;
         return ;
     }
@@ -53,6 +54,7 @@ void display(List head){
     return ;
     printf("\n");
     Node* temp = head;
+    printf("%c",head -> sign);
     while(temp){
         printf("%d\t",temp -> data);
         temp = temp -> next;

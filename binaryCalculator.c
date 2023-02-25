@@ -62,7 +62,7 @@ char** convertCharArray(char *expression,int *n){
 
         }
         else{
-            str[a++] = (char)(ch);
+            str[a++] = (char)(ch);//-312+311
             space++;              
             str = realloc(str, space); // allocate new space
         }
@@ -157,11 +157,11 @@ char** convertToPostfix(char **expression,int n){
         popC(&s);
     }
 // printf("\nPrinting Postfix :\n");
-//  for(int i = 0 ; i <= 4 ;i++){
-//                 // printf("Yes");
-//         // printf("%s\n",ans[i]);
-//         // printf("\n");
-//     }
+//  for(int i = 0 ; i < n ;i++){
+                // printf("Yes");
+        // printf("%s\n",ans[i]);
+        // printf("\n");
+    // }
     return ans;
 
 
@@ -202,17 +202,29 @@ char** convertToPostfix(char **expression,int n){
         }
         else 
         {
-            Node* b = pop(&s) ;
+            // Node* b = getTop(s) ;
+            // pop(&s);
+            // Node* a = getTop(s);
+            // pop(&s);
+            Node* b = pop(&s);
             Node* a = pop(&s);
-            // Node* c = pop(&s);
-
+    printf("\n Sign (%c) (%c)\n", a -> sign,b -> sign);
             //  display(b);
             //  display(a);
             //  display(c);
 
 
             if(!strcmp("*",ch)){
-                result = multiply(a,b);
+                // if(a -> sign == '+' && b -> sign == '+'){
+                //     result -> sign = '+';
+                // }else if(a -> sign == '-' && b -> sign == '+' || a -> sign == '+' && b -> sign == '-')
+                // {
+                //     result -> sign = '-';
+                // }
+                // else{
+                //     result -> sign = '+';
+                // }
+                result = multiply(a,b); 
                 // display(result);
 
             }
@@ -220,10 +232,44 @@ char** convertToPostfix(char **expression,int n){
                result =  divideTwoLinkedLists(a,b);
             }
              else if(!strcmp("+",ch)){
-                result = addTwoLinkedLists(a,b);
+                 if((a -> sign == '+' && b -> sign == '+')  ){     
+                    result -> sign = '+';
+                    result = addTwoLinkedLists(a,b);
+                 }               
+                else if((a -> sign == '-' && b -> sign == '+') || (a -> sign == '+' && b -> sign == '-'))
+                {
+                    result = subtractTwoLinkedLists(a,b);
+                }
+                else{
+                    result = addTwoLinkedLists(a,b);
+                    result -> sign = '-';
+                }
+                // printf("Sign %c" , result -> sign);
             }
             else if(!strcmp("-",ch)){
-                result =  subtractTwoLinkedLists(a,b);
+                //311-312
+                if(a -> sign == '+' && b -> sign == '+'){
+                    printf("Ye ki re");     
+                    result = subtractTwoLinkedLists(a,b);
+                 }               
+                else if((a -> sign == '-' && b -> sign == '+') || (a -> sign == '+' && b -> sign == '-'))
+                {
+                    //-10 - 12
+                    //10 - - 12
+                    if( a -> sign == '-'){
+                        result = addTwoLinkedLists(a,b);
+                        result -> sign = '-';
+                    }
+                    else{
+                        result = addTwoLinkedLists(a,b);
+                        result -> sign = '+';
+                    }
+                }
+                else{
+                    result = addTwoLinkedLists(a,b);
+                    result -> sign = '-';
+                }
+                // result =  subtractTwoLinkedLists(a,b);
             }
                 push(&s,result);
         }
@@ -238,7 +284,7 @@ void controlEverything(){
     // char* expression = inputExpression();
         // convertCharArray(expression);
         int n = 0;
-    char **temp = convertCharArray("4332431313413/425311234",&n);
+    char **temp = convertCharArray("311-312",&n);
 
     printf("\n");
     // for(int i = 0 ; i <= n-1 ;i++){
@@ -248,7 +294,6 @@ void controlEverything(){
 //    for(int i = 0 ; i <= n-1 ;i++){
 //                 // printf("Yes");
         // printf("%s\n",ans[i]);
-//         // printf("\n");
     // }
 // 
     Node* storageOfAnswer = postfixEvaluationWithCreatingLinkedLists(ans,n-1);
@@ -294,7 +339,7 @@ void displayS(Stack s){
    }
 }
 
-Node* top(Stack s){
+Node* getTop(Stack s){
     Node* newnode = (Node*)malloc(sizeof(Node));
     newnode -> data = -1;
     newnode -> next = NULL;

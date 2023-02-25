@@ -32,6 +32,7 @@ List subtractTwoLinkedLists(List L1,List L2){
 
     List L3;
     initList(&L3);
+    // L3 -> sign = '-';
 
     //My Function is implemented with always subtracting smaller no from bigger no
     //So if first no is smaller we would swap nos 
@@ -46,6 +47,7 @@ List subtractTwoLinkedLists(List L1,List L2){
 
     if(sizeOfList2 > sizeOfList1){
         //negative answer
+        L3 -> sign = '-';
         head1 = L2;
         head2 = L1;
     }
@@ -67,6 +69,7 @@ List subtractTwoLinkedLists(List L1,List L2){
                     break;
             }
             else if(temporary2 -> data > temporary2 -> data){
+                    // L3 -> sign = '-';
                     flag = 2;           // Indicates List 2 is greater
                     break;
             }
