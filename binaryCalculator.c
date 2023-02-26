@@ -229,7 +229,7 @@ char** convertToPostfix(char **expression,int n){
 
             }
             else if(!strcmp("/",ch)){
-               result =  divideTwoLinkedLists(a,b);
+               result =  divideOptimizedTwoLinkedLists(a,b);
                if((a -> sign == '-' && b -> sign  == '+' ) || (a -> sign == '+' && b -> sign == '-')){
                     result -> sign = '-';
                }
@@ -289,7 +289,7 @@ void controlEverything(){
     // char* expression = inputExpression();
         // convertCharArray(expression);
         int n = 0;
-    char **temp = convertCharArray("321-2",&n);
+    char **temp = convertCharArray("21132/21",&n);
 
     printf("\n");
     // for(int i = 0 ; i <= n-1 ;i++){312*122+121/2-3

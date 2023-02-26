@@ -20,61 +20,101 @@ void getNumberAndAddToLinkedList(List* temp,int number){
     getNumberAndAddToLinkedList(temp,number/10);
 }
 
-int compareLinkedLists(List mulResult,List Number){
-    int size1 = getSize(mulResult);
-    int size2 = getSize(Number);
-
-    if(size1 > size2){
-        return 0;                //Answer would be 0 as number is lesser
-    }
-    else{
-        if(size1 == size2){
-            Node* temporary1 = mulResult;
-            Node* temporary2 = Number;
-
-            int flag = 1;
-            while(temporary1 && temporary2){
-                if(temporary1 -> data > temporary2 -> data){
-                    flag = -1;   //break kro kuch nahi ho sakta ab
-                    break;
-                }
-                else if(temporary2 -> data > temporary1 -> data){
-                    flag = 2;   //if list 1 is bigger return 2
-                    break;      //Answer nahi aya abhi tak bhago answer ki taraf as like pointer 
-                }
-                
-                temporary1 = temporary1 -> next;
-                temporary2 = temporary2 -> next;
-
-            }
-
-            if(flag == 2){
-                return 2;       //temporary Answer
-            }
-            else if(flag == -1){
-                return -1;     //Exceeding answer 
-            }
-            return 1;       //indicates numbers are equal i.e answer is got perfectly
-                
-        }else{
-            return 2;       //try karte raho
-        }
-    }
-}
-Node* divideTwoLinkedLists(Node* divident,Node* divisor){
+Node* divideOptimizedTwoLinkedLists(Node* divident,Node* divisor){
         //divident - jyala divide krto
         //divisor - jyane divide krto
 
-        List remainder,quotient,divisor,divident,tempMul;
-        initList(remainder);
-        initList(quotient);
-        initList(divisor);
-        initList(divident);
-        initList(tempMul);
+        removePreceedingZeros(&divident);
+        removePreceedingZeros(&divisor);
+        display(divident);
+        display(divisor);
 
 
-    removePreceedingZeros(&first);
-    removePreceedingZeros(&second);
+        printf("\nAnswer : \n");
+        List remainder,quotient,tdivisor,tdivident,tempMul,temp,tempSub,result;
+        initList(&remainder);
+        initList(&quotient);
+        initList(&tdivisor);
+        initList(&tdivident);
+        initList(&tempMul);
+        initList(&temp);
+        initList(&tempSub);
+        initList(&result);
 
+        List tempDivisor ;
+        initList(&tempDivisor);
+
+        int size1 = getSize(divident);
+        int size2 = getSize(divisor);
+
+        // printf("size : %d",size1);
+        // printf("\nsize : %d",size2);
+    while(divident){
+        int i = 0;
+
+        initList(&tempSub);
+
+        while(divident &&getSize(tdivident) < size2 && i < size2){
+            append(&tdivident,divident -> data);
+            divident = divident -> next;
+            i++;
+        }
+
+        // printf("\n");
+        display(tdivident);
+        // display(divisor);
+        // printf("\n");
+
+        for(int i = 0 ; i < 10 ; i++){
+            tempDivisor = divisor;
+            List iteratorTemp;
+            initList(&iteratorTemp);
+            append(&iteratorTemp,i);
+            initList(&tdivisor);
+            while(tempDivisor){
+                append(&tdivisor,tempDivisor -> data);
+                tempDivisor = tempDivisor -> next;
+            }
+            // display(tdivident);
+
+            // display(tdivisor);
+            tempMul = multiply(iteratorTemp,tdivisor);
+            // display(tempMul);
+            // exit(0);    
+            int ans = compareLinkedLists(tempMul,tdivident);
+            // printf("%d",ans);
+            if(ans == 1){
+                temp = iteratorTemp;
+                // initList(&tdivident);
+                break;
+            }
+            else if(ans == -1  ){
+                tempSub = subtractTwoLinkedLists(tempMul,tdivident);
+                break;
+            }
+            else if(ans == 0)
+            {
+                List newnode ;
+                initList(&newnode);
+                append(&newnode,0);
+                temp = newnode;
+                break; 
+            }
+            else{
+                temp = iteratorTemp;
+            }
+        }
+
+        initList(&tdivident);
+        if(tempSub )
+        append(&tdivident,tempSub -> data);
+        append(&result,temp -> data);
+        // display(tdivident);
+    }
+        removePreceedingZeros(&result);
+        display(result);
+        exit(0);
+
+  
     
 }

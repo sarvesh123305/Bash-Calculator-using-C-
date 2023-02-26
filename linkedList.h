@@ -19,6 +19,8 @@ Node* top(List head);
 int isEmptyLinkedList(List);
 void removePreceedingZeros(List*);
 
+int compareLinkedLists(List,List);
+  
 #endif
 
 
