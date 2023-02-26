@@ -56,7 +56,7 @@ void display(List head){
     Node* temp = head;
     printf("%c",head -> sign);
     while(temp){
-        printf("%d\t",temp -> data);
+        printf("%d",temp -> data);
         temp = temp -> next;
     }
     printf("\n");

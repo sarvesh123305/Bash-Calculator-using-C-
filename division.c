@@ -90,8 +90,18 @@ Node* divideTwoLinkedLists(Node* first,Node* second){
                  break;
 
     }
-    for(int i = 1 ;; i++){
-
+    
+    long long int i ;
+    // long long temp = 1;
+    // for(int j = 0 ; j < i ; j++){
+        // temp = temp * 10 ;
+    // }
+    // printf("%lld",temp);
+    // exit(0);
+    //9
+    //8
+    for( i = 1 ; ; i++){
+        // printf("%lld\n",i);
         Node* firstNo  = first;
         secondNo = second;
 
