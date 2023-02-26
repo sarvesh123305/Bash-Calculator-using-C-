@@ -4,32 +4,39 @@
 #include<string.h>
 
 char** convertCharArray(char *expression,int *n){
-    
+    // 21*(12+21)
     int count1 = 0 ;
     int flag = 1;
-    char ch;
+    char ch;    
+    int ct = 0;
     for(int i = 0 ; expression[i] != '\0' ;i++){
          ch = expression[i];
-        if(ch == '+' || ch == '-' || ch == '*' || ch == '/'||ch == '(' || ch == ')'){
-            
-            if(flag){
-                count1 += 2;
-            }
-            else{
-                count1++;
-            }
-            flag = 0;
+         int num = ch - '0';
+
+         int checkNo = num >= 0 && num <= 9;
+         if(ch == '(' || ch == ')'){
+            count1++;
+
+         }
+         else if(checkNo){
+            ct++;
         }
-        else{
-            flag = 1;
+        else {
+            count1++;
+            ct = 0;
         }
+          if(ch == '+' || ch == '-' || ch == '*' || ch == '/'){
+            count1++;
+            // ct = 0;
+        }
+        // if(i == )
 
 
     }
-    if(ch != '(' || ch != ')')
+    if(ct)
     ++count1;
 
-    printf("\n%d\n",count1);
+    printf("\nCount : %d\n",count1);
 
     char **ans = (char**)malloc(sizeof(char*)*count1)  ;
     int space = 0;
@@ -289,7 +296,7 @@ void controlEverything(){
     // char* expression = inputExpression();
         // convertCharArray(expression);
         int n = 0;
-    char **temp = convertCharArray("21132/21",&n);
+    char **temp = convertCharArray("",&n);
 
     printf("\n");
     // for(int i = 0 ; i <= n-1 ;i++){312*122+121/2-3
@@ -300,7 +307,7 @@ void controlEverything(){
 //                 // printf("Yes");
         // printf("%s\n",ans[i]);
     // }
-// 
+
     Node* storageOfAnswer = postfixEvaluationWithCreatingLinkedLists(ans,n-1);
 
         // printf("Answer\n");
