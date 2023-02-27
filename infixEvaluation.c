@@ -85,29 +85,32 @@ Node* applyOp(Node* a, Node* b, char op){
                 }
     }
 }
-void infixEvaluation(char *str,int n){
+void infixEvaluation(char *str){
 
     charStack cStack;
     Stack nStack;
-    initStackN(&nStack);
-    initStackC(&cStack,n);
+  ;
 
     List l1,l2,result;
     initList(&l1);
     initList(&l2);
     initList(&result);
     
-    int count = 0;
+    int count = 0 , count1 = 0;
     for(int i = 0 ; str[i] != '\0' ; i++){
+        if(str[i] == '+' || str[i] == '-' || str[i] == '/' || str[i] == '*' || str[i] == '(' || str[i] == ')')
+        count1++;
         count++;
     }
-
+    int n = count1++;
+    initStackN(&nStack);
+    initStackC(&cStack,n);
     for(int i = 0 ; i < count+1; i++){
         char ch = str[i];
         int num = ch - '0';
         // printf("%c %d\n",ch,i);
-        // if(ch == ' ')
-        // continue;
+        if(ch == ' ')
+        continue;
 
         if(ch == '('){
             if(l1){
@@ -148,7 +151,7 @@ void infixEvaluation(char *str,int n){
                 pushN(&nStack,l1);
                 initList(&l1);
             }
-            while(topC(cStack) != ' ' && precedence(topC(cStack)) > precedence(ch)){
+            while(topC(cStack) != ' ' && precedence(topC(cStack)) >= precedence(ch)){
                 Node* b = popN(&nStack);
                 Node* a = popN(&nStack);
                 // printf("%d %d",b,a);

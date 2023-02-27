@@ -86,6 +86,6 @@ for(int i = 0 ; i < n ; i++){
 // printf("****");
 // display(result);
 // printf("****");
-
+removePreceedingZeros(&result);
 return result;
 }

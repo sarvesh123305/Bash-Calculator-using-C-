@@ -26,166 +26,163 @@ Node* divideOptimizedTwoLinkedLists(Node* divident,Node* divisor){
 
         removePreceedingZeros(&divident);
         removePreceedingZeros(&divisor);
-        display(divident);
-        display(divisor);
+        // display(divident);
+        // display(divisor);
+        char sign ;
+        if((divident -> sign == '+' && divisor -> sign == '-' ) || divident -> sign == '-' && divisor -> sign == '+'){
+            sign = '-';
+        }
+        else{
+            sign = '+';
+        }
 
         if(getSize(divisor) == 1 && divisor -> data == 0){
             printf("\nDivide by Zero Exception\n");
             exit(0);
         }
         printf("\nAnswer : \n");
-        List remainder,quotient,tdivisor,tdivident,tempMul,temp,tempSub,result,manyTemp;
-        initList(&remainder);
-        initList(&quotient);
+        List tdivisor,result,tdivident,iterator,tempMul,tempAns,lastIterator,tempSub;
         initList(&tdivisor);
         initList(&tdivident);
         initList(&tempMul);
-        initList(&temp);
+        initList(&tempAns);
         initList(&tempSub);
         initList(&result);
-        initList(&manyTemp);
 
 
-        List tempDivisor ;
-        initList(&tempDivisor);
 
         int size1 = getSize(divident);
         int size2 = getSize(divisor);
 
-
-        // printf("size : %d",size1);
-        // printf("\nsize : %d",size2);
-        Node* hehe = divident;
+        
+        int ans;
         int flag = 0;
-    while(divident){
-        int i = 0;
-
-        initList(&tempSub);
-        int tempSize = size2;
-        if(hehe == divident){
-            // tempSize -= 1;
-        }
-        else if(flag == 1){
-            tempSize += 1;
-        }
-        while(divident && getSize(tdivident) < tempSize&& i < tempSize){
+        int j = 0;
+        while(divident ){
             append(&tdivident,divident -> data);
             divident = divident -> next;
-            i++;
-        }
+j++;
+                // display(tdivident);
 
-        // printf("%d",tempSize);
-        display(tdivident);
-        // exit(0);
-        // display(divisor);
-        // printf("\n");
-        int ans;
-        for(int i = 0 ; i < 10 ; i++){
-            tempDivisor = divisor;
-            List iteratorTemp;
-            initList(&iteratorTemp);
-            append(&iteratorTemp,i);
-            // initList(&tdivisor);
-            // display(tdivisor);
-            // printf("asda");
-            while(tempDivisor){
-                append(&tdivisor,tempDivisor -> data);
-                tempDivisor = tempDivisor -> next;
-            }
-            // display(tdivident);
-            // display(tdivisor);
-            initList(&manyTemp);
-            while(tempMul){
-                append(&manyTemp,tempMul -> data);
-                tempMul = tempMul -> next;
-            }
-
-            tempMul = multiply(iteratorTemp,tdivisor);
-            // tempMul -> sign = '+';
-            initList(&tdivisor);
-            // display(tempMul);
-             ans = compareLinkedLists(tempMul,tdivident);
-            // printf("%d ",ans);
-            // display(tempMul);
-            // display(tdivident);  
-
-            if(ans == 1){
-                temp = iteratorTemp;
-            // initList(&tdivident);
-                // printf("Yeszava");
-                // initList (&tdivident);
-                //  List newnode ;
-                // initList(&newnode);
-                // append(&newnode,0);
-                // temp = newnode;
-                break;
-            }
-            // else if(ans == 22 ){
-            //     // display(tempMul);
-            //     // display(tdivident);
-            //     // exit(0);
-            //     tempMul -> sign = '+';
-            //     tempSub = subtractTwoLinkedLists(tempMul,tdivident);
-            //     // display(tempSub);
-            //     break;
-            // }
-            else if(ans == 11){
-                // tempSub = subtractTwoLinkedLists(tempMul,tdivident);
-                break;
-            }
-            else if(ans == 0)
-            {
-                List newnode ;
-                initList(&newnode);
-                append(&newnode,0);
-                temp = newnode;
-                break; 
-            }
-            else{
-                temp = iteratorTemp;
-            }
-        }
-        // display(manyTemp);
-        // display(tdivident);
-        // if(ans == 11)
-        // tempSub = subtractTwoLinkedLists(tdivident,manyTemp);
-            // initList(&tdivident);
-        // display(tempSub);
-        if( ans == 1)
-        {
-            initList(&tdivident);
-            append(&tdivident,0);
-        }
-        // display(tdivident);
-    //         else if(ans == 22){
-    // //             initList(&tdivident);
-    // // // printf("sa");
-    // //             tempSub = subtractTwoLinkedLists(tdivident,temp);
-    // //             while(tempSub){
-    // //                 append(&tdivident,tempSub -> data);
-    // //                 tempSub = tempSub -> next;
-    // //             } 
+            for(int i = 0 ; i <= 9 ; i++){
+                // List temporaryDivident = tdivident;
+                // initList(&tdivident);
+                // while(temporaryDivident){
+                //     append(&tdivident,temporaryDivident -> data);
+                //     temporaryDivident = temporaryDivident -> next;
+                // }
+                // display(tdivident);
+                initList(&tdivisor);
+                List temp = divisor;
+                while(temp){
+                    append(&tdivisor,temp -> data);
+                    temp = temp -> next;
+                }
+                initList(&lastIterator);
+                append(&lastIterator,i > 0 ? i-1 : i);
+                initList(&iterator);
+                append(&iterator,i);
                 
+                tempMul = multiply(iterator,tdivisor);
+                ans = compareLinkedLists(tempMul,tdivident);
+                // display(tdivident);
+                // switch(ans){}
+                if(ans == 0){
+                    //12 9
+                    tempAns = lastIterator;
+                    // display(lastIterator);
+                    break;
+                }
+                else if(ans == 1){
+                    tempAns = iterator;
+                    // display(iterator);
+                    break;
+                }
+                else if(ans == 11){
+                    tempAns = lastIterator;
+                    // display(lastIterator);
 
-    //         }
-        else if(ans == 11 ){
-            // tempSub = subtractTwoLinkedLists(tdivident,manyTemp);
-            initList(&tdivident);
-            // while(tempSub){
-                // append(&tdivident,tempSub -> data);
-                // tempSub = tempSub -> next;
+                    break;
+                }
+                else if(i == 9){
+                    flag = 1;
+                    tempAns = iterator;
+                    break;
+                }
+                // else if(ans == 22){
+                    
+                // }
+                // exit(0);
+                
+            }
+            // exit(0);
+            // display(tdivident);
+            List abc = divisor; 
+            initList(&tdivisor);
+            while(abc){
+                append(&tdivisor,abc -> data);
+                abc = abc -> next;
+            }
+            // List xyz = tdivident;
+            // initList(&tdivident);
+
+            // while(xyz){
+            //     append(&tdivident,xyz -> data);
+            //     xyz = xyz -> next;
             // }
-        }
-        append(&result,temp -> data);
-        // if(i == 1)
-            // break;
-        // display(tdivident);
-    }
-        removePreceedingZeros(&result);
-        printf("\nRESULT\n");
-        display(result);
-        exit(0);
+            // while()
+                if(ans == 1){
+                    initList(&tdivident);
+                    // append(&tdivident,0);
+                }
+                else if(ans == 0 || ans == 11){
+                    // display(tdivisor);
+                    tempMul = multiply(lastIterator,tdivisor);
+                    // display(tempMul);
+                    tdivident -> sign = '+';
+                    tempMul -> sign = '+';
+                    // printf("Hii Divi");
+                    // display(tdivident);
+                    // display(tempMul);
+                    tempSub = subtractTwoLinkedLists(tdivident,tempMul);
+                    // display(tempSub);
+                    // printf("End");
 
+                    initList(&tdivident);
+                    while(tempSub){
+                        append(&tdivident,tempSub -> data);
+                        tempSub = tempSub -> next;
+                    }
+                }
+                else if(flag){
+                    flag = 0;
+                    // display(tdivident);
+                    // display(tempMul);
+                    tdivident -> sign = '+';
+                    tempMul -> sign = '+';
+                    tempSub = subtractTwoLinkedLists(tdivident,tempMul);
+                    // display(tempSub);
+
+                     initList(&tdivident);
+                    while(tempSub){
+                        append(&tdivident,tempSub -> data);
+                        tempSub = tempSub -> next;
+                    }
+                }
+                    // display(tdivident);
+                    append(&result ,tempAns -> data);
+                    // display(tempAns);
+        }
+
+        removePreceedingZeros(&result);
+        // display(result);
+        result -> sign = sign;      
+        // printf("size : %d",size1);
+        // printf("\nsize : %d",size2);
+        
+     
+       
+    return result;
   
     
 }

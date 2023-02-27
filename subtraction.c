@@ -11,6 +11,9 @@ List subtractTwoLinkedLists(List L1,List L2){
 
     char sign = '+';
 
+    removePreceedingZeros(&L1);
+    removePreceedingZeros(&L2);
+
     //My Function is implemented with always subtracting smaller no from bigger no
     //So if first no is smaller we would swap nos 
 

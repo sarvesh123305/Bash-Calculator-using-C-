@@ -7,8 +7,8 @@
 #include "infixEvaluation.h"
 int main(){
 
-    char str[] = "21456/21";
-    infixEvaluation(str,10);
+    char str[] = "123-1112";
+    infixEvaluation(str);
     // controlEverything();
     // List L1,L2;
     // initList(&L1);
