@@ -52,25 +52,31 @@ Node* divideOptimizedTwoLinkedLists(Node* divident,Node* divisor){
         int size1 = getSize(divident);
         int size2 = getSize(divisor);
 
+
         // printf("size : %d",size1);
         // printf("\nsize : %d",size2);
         Node* hehe = divident;
+        int flag = 0;
     while(divident){
         int i = 0;
 
         initList(&tempSub);
         int tempSize = size2;
         if(hehe == divident){
-            tempSize -= -1;
+            // tempSize -= 1;
         }
-        while(divident && getSize(tdivident) < tempSize+1 && i < tempSize+1){
+        else if(flag == 1){
+            tempSize += 1;
+        }
+        while(divident && getSize(tdivident) < tempSize&& i < tempSize){
             append(&tdivident,divident -> data);
             divident = divident -> next;
             i++;
         }
 
-        // printf("\n");
-        // display(tdivident);
+        // printf("%d",tempSize);
+        display(tdivident);
+        // exit(0);
         // display(divisor);
         // printf("\n");
         int ans;
@@ -80,7 +86,7 @@ Node* divideOptimizedTwoLinkedLists(Node* divident,Node* divisor){
             initList(&iteratorTemp);
             append(&iteratorTemp,i);
             // initList(&tdivisor);
-            display(tdivisor);
+            // display(tdivisor);
             // printf("asda");
             while(tempDivisor){
                 append(&tdivisor,tempDivisor -> data);
@@ -140,7 +146,7 @@ Node* divideOptimizedTwoLinkedLists(Node* divident,Node* divisor){
             }
         }
         // display(manyTemp);
-        display(tdivident);
+        // display(tdivident);
         // if(ans == 11)
         // tempSub = subtractTwoLinkedLists(tdivident,manyTemp);
             // initList(&tdivident);
@@ -165,10 +171,10 @@ Node* divideOptimizedTwoLinkedLists(Node* divident,Node* divisor){
         else if(ans == 11 ){
             // tempSub = subtractTwoLinkedLists(tdivident,manyTemp);
             initList(&tdivident);
-            while(tempSub){
-                append(&tdivident,tempSub -> data);
-                tempSub = tempSub -> next;
-            }
+            // while(tempSub){
+                // append(&tdivident,tempSub -> data);
+                // tempSub = tempSub -> next;
+            // }
         }
         append(&result,temp -> data);
         // if(i == 1)

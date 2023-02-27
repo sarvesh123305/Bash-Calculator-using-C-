@@ -1,7 +1,8 @@
 #include<stdio.h>
 #include "characterStack/stack.h"
 #include "numberStack/stack.h"
-
+#include "multiplication.h"
+#include "divisionOptimized.h"
 int isNumber(char ch){
     int num = ch - '0';
     return (num <= 9 && num>=0);
@@ -22,35 +23,95 @@ int precedence(char symb){
 
 }
 
-int applyOp(Node* a, Node* b, char op){
+Node* applyOp(Node* a, Node* b, char op){
+    List result;
+    initList(&result);  
     switch(op){
-        case '+': return a + b;
-        case '-': return a - b;
-        case '*': return a * b;
-        case '/': return a / b;
+        case '+': 
+         if((a -> sign == '+' && b -> sign == '+')  ){     
+                    result = addTwoLinkedLists(a,b);
+                    result -> sign = '+';
+                 }               
+                else if((a -> sign == '-' && b -> sign == '+') || (a -> sign == '+' && b -> sign == '-'))
+                {
+                    result = subtractTwoLinkedLists(a,b);
+                }
+                else{
+                    result = addTwoLinkedLists(a,b);
+                    result -> sign = '-';
+                }   
+                break;
+        case '-': 
+         if(a -> sign == '+' && b -> sign == '+'){
+                    result = subtractTwoLinkedLists(a,b);
+                 }               
+                else if((a -> sign == '-' && b -> sign == '+') || (a -> sign == '+' && b -> sign == '-'))
+                {
+                    //-10 - 12
+                    //10 - - 12
+                    if( a -> sign == '-'){
+                        result = addTwoLinkedLists(a,b);
+                        result -> sign = '-';
+                    }
+                    else{
+                        result = addTwoLinkedLists(a,b);
+                        result -> sign = '+';
+                    }
+                }
+                else{
+                    result = addTwoLinkedLists(a,b);
+                    result -> sign = '-';
+                }
+                break;
+        case '*': 
+        result = multiply(a,b); 
+                if(a -> sign == '+' && b -> sign == '+'){
+                    result -> sign = '+';
+                }else if(a -> sign == '-' && b -> sign == '+' || a -> sign == '+' && b -> sign == '-')
+                {
+                    result -> sign = '-';
+                }
+                 else{
+                    result -> sign = '+';
+                }
+                break;
+        case '/': 
+               result =  divideOptimizedTwoLinkedLists(a,b);
+               if((a -> sign == '-' && b -> sign  == '+' ) || (a -> sign == '+' && b -> sign == '-')){
+                    result -> sign = '-';
+               }
+               else{
+                result -> sign = '+';   
+                }
     }
 }
-void infixEvaluation(char str[]){
+void infixEvaluation(char *str,int n){
 
     charStack cStack;
-    numberStack nStack;
-    initStackN(&nStack,n);
+    Stack nStack;
+    initStackN(&nStack);
     initStackC(&cStack,n);
 
     List l1,l2,result;
     initList(&l1);
     initList(&l2);
     initList(&result);
+    
+    int count = 0;
+    for(int i = 0 ; str[i] != '\0' ; i++){
+        count++;
+    }
 
-    for(int i = 0 ; str[i] != '\0'; i++){
+    for(int i = 0 ; i < count+1; i++){
         char ch = str[i];
         int num = ch - '0';
         // printf("%c %d\n",ch,i);
         // if(ch == ' ')
         // continue;
+
         if(ch == '('){
             if(l1){
-                pushN(&nStack,num);
+                pushN(&nStack,l1);
                 initList(&l1);
             }
             
@@ -63,16 +124,15 @@ void infixEvaluation(char str[]){
         }
         else if(ch == ')'){
             if(l1){
-                pushN(&nStack,num);
+                pushN(&nStack,l1);
                 initList(&l1);
             }
             while(!isEmptyC(cStack) && topC(cStack) != '(')
               {
-                Node* val2 = topN(nStack);
-                popN(&nStack);
+                Node* val2 = popN(&nStack);
+                
                  
-                Node* val1 = topN(nStack);
-                popN(&nStack);
+                Node* val1 = popN(&nStack);
                  
                 char op = topC(cStack);
                 popC(&cStack);
@@ -85,12 +145,12 @@ void infixEvaluation(char str[]){
         }
         else{
             if(l1){
-                pushN(&nStack,num);
+                pushN(&nStack,l1);
                 initList(&l1);
             }
             while(topC(cStack) != ' ' && precedence(topC(cStack)) > precedence(ch)){
-                int b = popN(&nStack);
-                int a = popN(&nStack);
+                Node* b = popN(&nStack);
+                Node* a = popN(&nStack);
                 // printf("%d %d",b,a);
 
                 char ch = popC(&cStack);
@@ -99,6 +159,7 @@ void infixEvaluation(char str[]){
             pushC(&cStack,ch);
         }
     }
-    printf("\n");
     displayN(nStack);
+
+    // printf("\nsaraf");
 }

@@ -1,12 +1,15 @@
 #include<stdio.h>
-#include "binaryCalculator.h"
+// #include "binaryCalculator.h"
 // #include "multiplication.h"
 // #include "linkedList.h"
 // #include<stdlib.h>
 // #include "subtraction.h"
+#include "infixEvaluation.h"
 int main(){
 
-    controlEverything();
+    char str[] = "21456/21";
+    infixEvaluation(str,10);
+    // controlEverything();
     // List L1,L2;
     // initList(&L1);
     // initList(&L2);

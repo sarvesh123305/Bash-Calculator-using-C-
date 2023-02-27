@@ -1,0 +1,11 @@
+#include<stdio.h>
+#include "characterStack/stack.h"
+#include "numberStack/stack.h"
+#include "multiplication.h"
+
+int isNumber(char ch);
+
+int precedence(char symb);
+
+Node* applyOp(Node* a, Node* b, char op);
+void infixEvaluation(char *str,int n);

@@ -13,8 +13,6 @@ typedef struct NodeforStack{
 }NodeforStack;
 
 typedef struct Stack{
-    // Node* data ;
-    // int data;
     NodeforStack* top ;
 }Stack;
 
