@@ -3,6 +3,7 @@
 #include "numberStack/stack.h"
 #include "multiplication.h"
 #include "divisionOptimized.h"
+#include<stdlib.h>
 int isNumber(char ch){
     int num = ch - '0';
     return (num <= 9 && num>=0);
@@ -89,7 +90,6 @@ void infixEvaluation(char *str){
 
     charStack cStack;
     Stack nStack;
-  ;
 
     List l1,l2,result;
     initList(&l1);
@@ -111,29 +111,47 @@ void infixEvaluation(char *str){
         // printf("%c %d\n",ch,i);
         if(ch == ' ')
         continue;
-
         if(ch == '('){
             if(l1){
+                display(l1);
                 pushN(&nStack,l1);
                 initList(&l1);
             }
             
             pushC(&cStack,'(');
         }
+        
         else if(isNumber(ch)){
         // printf("%c %d\n",ch,i);
+        if(l1 && !(l1 -> next)){
+                // printf("sa");
+            if(!isEmptyC(cStack)){
+                l1 -> sign = topC(cStack);
+                // printf("sa");
+                // display(l1);
+            }else{
+                l1 -> sign = '+';
+            }
+        }
             append(&l1,num);
+// exit(0);
+
             // pushN(&nStack,num);
         }
         else if(ch == ')'){
             if(l1){
+                // display(l1);
+
                 pushN(&nStack,l1);
                 initList(&l1);
             }
             while(!isEmptyC(cStack) && topC(cStack) != '(')
               {
+                if(getSizeOfStackN(nStack) < 2)
+                break;
+                // printf("Size %d",getSizeOfStackN(nStack));
+                // exit(0);
                 Node* val2 = popN(&nStack);
-                
                  
                 Node* val1 = popN(&nStack);
                  
@@ -148,10 +166,13 @@ void infixEvaluation(char *str){
         }
         else{
             if(l1){
+                // display(l1);
                 pushN(&nStack,l1);
                 initList(&l1);
             }
             while(topC(cStack) != ' ' && precedence(topC(cStack)) >= precedence(ch)){
+                if(getSizeOfStackN(nStack) < 2)
+                break;
                 Node* b = popN(&nStack);
                 Node* a = popN(&nStack);
                 // printf("%d %d",b,a);

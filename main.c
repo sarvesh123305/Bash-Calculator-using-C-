@@ -7,7 +7,7 @@
 #include "infixEvaluation.h"
 int main(){
 
-    char str[] = "123-1112";
+    char str[] = "123-123";
     infixEvaluation(str);
     // controlEverything();
     // List L1,L2;
