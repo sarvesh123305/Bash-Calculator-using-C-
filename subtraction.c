@@ -32,7 +32,7 @@ List subtractTwoLinkedLists(List L1,List L2){
         head2 = L1;
     }
     else if(sizeOfList1 > sizeOfList2){
-        head1 = L1;
+        head1 = L1;         // Indicates List 1 is greater
         head2 = L2;
     }
     else{
@@ -45,12 +45,12 @@ List subtractTwoLinkedLists(List L1,List L2){
         while(temporary1 && temporary2){
             
             if(temporary1 -> data > temporary2 -> data){
-                    flag = 1;           // Indicates List 1 is greater// Indicates List 1 is greater
+                    flag = 1;           // Indicates List 1 is greater// 
                     break;
             }
             else if(temporary2 -> data > temporary1 -> data){
                     sign = '-';
-                    flag = 2;           // Indicates List 2 is greater
+                    flag = 2;           // Indicates List 2 is greater so the answer is negative
                     break;
             }
         
@@ -58,6 +58,7 @@ List subtractTwoLinkedLists(List L1,List L2){
             temporary2 = temporary2 -> next;
         }
 
+        //By getting values of flag setting list 1 as greatest 
         if(flag == 1){
             head1 = L1;
             head2 = L2;
@@ -89,7 +90,7 @@ List subtractTwoLinkedLists(List L1,List L2){
         borrow = 0;
 
         if(diff < 0){
-            val1 = val1 + 10;       //Borrow req hence add 10 
+            val1 = val1 + 10;               //Borrow req hence add 10 
             diff = (val1 - val2 - temp);
             borrow = 1;
         }
@@ -106,7 +107,7 @@ List subtractTwoLinkedLists(List L1,List L2){
             head2 = head2 -> next;
       } 
       reverse(&L3);
-      removePreceedingZeros(&L3);
+      removePreceedingZeros(&L3);             //Removing preeceding zeros and setting sign
       L3 -> sign = sign;
       return L3;
 }

@@ -118,9 +118,7 @@ int compareLinkedLists(List mulResult,List Number){
     if(size1 > size2){
         return 0;                //Answer would be 0 as number is lesser
     }
-    // else if(size2 > size1){
-    //     return 2;                //try karte raho
-    // }
+    
     else{
         if(size1 == size2){
             Node* temporary1 = mulResult;

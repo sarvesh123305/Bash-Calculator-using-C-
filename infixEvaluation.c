@@ -9,6 +9,10 @@ int isNumber(char ch){
     return (num <= 9 && num>=0);
 }
 
+int isCharacter(char ch){
+   return (ch >= 'a' && ch <= 'z' )|| (ch >= 'A' && ch <= 'Z');
+}
+
 int precedence(char symb){
 
     if(symb == '(')
@@ -24,66 +28,84 @@ int precedence(char symb){
 
 }
 
+int getAndReturnSignsOfNumber(Node* a,Node* b){
+    int sign = 0;
+        if((a -> sign == '+' && b -> sign == '+')  ){     
+            sign = 1;
+            }               
+        else if((a -> sign == '-' && b -> sign == '+') || (a -> sign == '+' && b -> sign == '-'))
+        {
+              sign = 2;
+        }
+        else{
+            sign = -1;
+        }   
+        return sign;
+}
+
+int isOperator(char ch){
+     return ((ch == '+' || ch == '-' || ch == '/' || ch == '*' || ch == '(' || ch == ')'));
+}
 Node* applyOp(Node* a, Node* b, char op){
     List result;
     initList(&result);  
+        int detectOp = getAndReturnSignsOfNumber(a,b);
     switch(op){
         case '+': 
-         if((a -> sign == '+' && b -> sign == '+')  ){     
+                if(detectOp == 1){
                     result = addTwoLinkedLists(a,b);
                     result -> sign = '+';
-                 }               
-                else if((a -> sign == '-' && b -> sign == '+') || (a -> sign == '+' && b -> sign == '-'))
-                {
+                }
+                else if(detectOp == 2){
                     result = subtractTwoLinkedLists(a,b);
                 }
                 else{
                     result = addTwoLinkedLists(a,b);
-                    result -> sign = '-';
-                }   
+                            result -> sign = '-';
+                }
                 break;
+
+       
         case '-': 
-         if(a -> sign == '+' && b -> sign == '+'){
+                if(detectOp == 1){
                     result = subtractTwoLinkedLists(a,b);
-                 }               
-                else if((a -> sign == '-' && b -> sign == '+') || (a -> sign == '+' && b -> sign == '-'))
-                {
-                    //-10 - 12
-                    //10 - - 12
+                }
+                else if(detectOp == 2){
                     if( a -> sign == '-'){
-                        result = addTwoLinkedLists(a,b);
-                        result -> sign = '-';
-                    }
-                    else{
-                        result = addTwoLinkedLists(a,b);
-                        result -> sign = '+';
-                    }
+                                result = addTwoLinkedLists(a,b);
+                                result -> sign = '-';
+                            }
+                            else{
+                                result = addTwoLinkedLists(a,b);
+                                result -> sign = '+';
+                            }
                 }
                 else{
-                    result = addTwoLinkedLists(a,b);
-                    result -> sign = '-';
-                }
+                            result = addTwoLinkedLists(a,b);
+                            result -> sign = '-';
+                        }
                 break;
+
+        
         case '*': 
-        result = multiply(a,b); 
-                if(a -> sign == '+' && b -> sign == '+'){
-                    result -> sign = '+';
-                }else if(a -> sign == '-' && b -> sign == '+' || a -> sign == '+' && b -> sign == '-')
-                {
-                    result -> sign = '-';
+                result = multiply(a,b); 
+                if(detectOp == 2){
+                            result -> sign = '-';
                 }
-                 else{
+                else{
                     result -> sign = '+';
                 }
                 break;
-        case '/': 
-               result =  divideOptimizedTwoLinkedLists(a,b);
-               if((a -> sign == '-' && b -> sign  == '+' ) || (a -> sign == '+' && b -> sign == '-')){
-                    result -> sign = '-';
-               }
-               else{
-                result -> sign = '+';   
-                }
+                    
+                case '/': 
+                    result =  divideOptimizedTwoLinkedLists(a,b);
+                        if(detectOp == 2){
+                            result -> sign = '-';
+                        }
+                        else{
+                            result -> sign = '+';
+                        }
+                break;
     }
 }
 void infixEvaluation(char *str){
@@ -98,61 +120,51 @@ void infixEvaluation(char *str){
     
     int count = 0 , count1 = 0;
     for(int i = 0 ; str[i] != '\0' ; i++){
-        if(str[i] == '+' || str[i] == '-' || str[i] == '/' || str[i] == '*' || str[i] == '(' || str[i] == ')')
+        if(isOperator(str[i]))
         count1++;
         count++;
     }
-    int n = count1++;
+
+    int n = count1;
     initStackN(&nStack);
     initStackC(&cStack,n);
     for(int i = 0 ; i < count+1; i++){
         char ch = str[i];
         int num = ch - '0';
-        // printf("%c %d\n",ch,i);
+
         if(ch == ' ')
         continue;
+
         if(ch == '('){
+
             if(l1){
-                display(l1);
                 pushN(&nStack,l1);
                 initList(&l1);
             }
-            
+
             pushC(&cStack,'(');
         }
         
         else if(isNumber(ch)){
-        // printf("%c %d\n",ch,i);
-        if(l1 && !(l1 -> next)){
-                // printf("sa");
-            if(!isEmptyC(cStack)){
-                l1 -> sign = topC(cStack);
-                // printf("sa");
-                // display(l1);
-            }else{
-                l1 -> sign = '+';
-            }
-        }
             append(&l1,num);
-// exit(0);
-
-            // pushN(&nStack,num);
         }
-        else if(ch == ')'){
-            if(l1){
-                // display(l1);
 
+        else if(ch == ')'){
+
+            if(l1){
                 pushN(&nStack,l1);
                 initList(&l1);
             }
+
             while(!isEmptyC(cStack) && topC(cStack) != '(')
               {
-                if(getSizeOfStackN(nStack) < 2)
-                break;
-                // printf("Size %d",getSizeOfStackN(nStack));
-                // exit(0);
+                 if(getSizeOfStackN(nStack) < 2)
+                {
+                    printf("Invalid Operands");
+                    exit(0);
+                }
+
                 Node* val2 = popN(&nStack);
-                 
                 Node* val1 = popN(&nStack);
                  
                 char op = topC(cStack);
@@ -165,17 +177,21 @@ void infixEvaluation(char *str){
                 popC(&cStack);
         }
         else{
+
             if(l1){
-                // display(l1);
                 pushN(&nStack,l1);
                 initList(&l1);
             }
+
             while(topC(cStack) != ' ' && precedence(topC(cStack)) >= precedence(ch)){
                 if(getSizeOfStackN(nStack) < 2)
-                break;
+                {
+                    printf("Invalid Operands");
+                    exit(0);
+                }
+
                 Node* b = popN(&nStack);
                 Node* a = popN(&nStack);
-                // printf("%d %d",b,a);
 
                 char ch = popC(&cStack);
                 pushN(&nStack,applyOp(a,b,ch));
@@ -185,5 +201,4 @@ void infixEvaluation(char *str){
     }
     displayN(nStack);
 
-    // printf("\nsaraf");
 }

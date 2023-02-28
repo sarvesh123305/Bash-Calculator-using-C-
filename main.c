@@ -1,78 +1,63 @@
 #include<stdio.h>
-// #include "binaryCalculator.h"
-// #include "multiplication.h"
-// #include "linkedList.h"
-// #include<stdlib.h>
-// #include "subtraction.h"
 #include "infixEvaluation.h"
+#include<stdlib.h>
+#include<string.h>
+
+#define MAX 2048
+
+void displayInformation(){
+printf("\nBC 1.21  SARVESH KULKARNI - 142203012");
+    printf("\nCopyright 2022 , Free Software Foundation under GNU");
+    printf("\nThis is a free and open source software with ABSOLUTELY NO WARRANTY");
+    printf("\nOperations Supported - (+  -  /  * )\n");
+    printf("Use 'info' for more information\n");
+
+}
 int main(){
+    displayInformation();
 
-    char str[] = "123-123";
-    infixEvaluation(str);
-    // controlEverything();
-    // List L1,L2;
-    // initList(&L1);
-    // initList(&L2);
-   
-
-    // append(&L1,9);
-    // append(&L1,2);
-    // append(&L1,3);
-    // append(&L1,4);
-    // append(&L1,8);
-    // append(&L1,8);
-    // // append(&L1,1);
-
-
-  
-    // append(&L2,2);
-    // append(&L2,7);
-    //    append(&L2,3);
-    // append(&L2,4);
-    // append(&L2,8);
-    // append(&L2,0);
-
-
-    // divideTwoLinkedLists(L1,L2);
-    // append(&L2,1);
-
-
-    // display(L2);
-
-    // Node* result = multiply(L1,L2);
-    // display(result);
-    // Stack s;
-    // initStack(&s);
-    // push(&s);
-    // push(&s);
-    // push(&s);
-
-    // List L1,L2;
+    char str[MAX] = "";
+    char ab[] = "quit";
+    int i = 0 ;
     
-    // initList(&L1);
-    // initList(&L2);/ initList(&L1);
-    // initList(&L2);
+    while(str != "quit"){
+       
+        fgets(str,MAX,stdin);
 
-    // append(&L1,0);
-    // append(&L1,3);
-    // append(&L1,0);
+    int len = strlen(str);
 
-    // append(&L2,2);
-    // Stack s;
-    // initStack(&s);
-    // push(&s,L1);
+    if(len > 0 && str[len-1] == '\n'){
+        str[len-1] = '\0';
+    }
 
-    // append(&L2,9);
-    // append(&L2,0);
+    if(strcmp(str,"quit") == 0)
+            break;
 
+    else if(strcmp(str,"clear") ==  0){
+             system("clear");
+            displayInformation();
+    }
 
-    // List L3 = addTwoLinkedLists(L1,L2);
-    // List L4 = subtractTwoLinkedLists(L1,L2);
+    else if(strcmp(str,"info") ==  0){
+        printf("\nThis is a Binary Calculator which can add very large numbers ");
+        printf("Everything is represented via linked lists so it has the ability to perform operation like addition , subtraction ,multiplication and division of large number\n");
+        printf("For more help you can use ");
+        printf("\n1)clear - clearing the screen \n2)quit - quitting the bc\n\n");
+        continue;
+    }
 
-    // display(L3);
-    // display(L4);
-
+    else{
+        for(int i = 0 ; str[i] != '\0' ; i++){
+            if(isCharacter(str[i]))
+             {
+                   printf("Invalid Expression\n");
+                    exit(0);
+             }
+         } 
+        } 
+        infixEvaluation(str);
+        
+    }
     return 0;
-
 }
 //gcc main.c addition.c linkedList.c subtraction.c
