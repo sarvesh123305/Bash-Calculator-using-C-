@@ -15,17 +15,17 @@ void displayN(Stack s){
    return ;
 
    NodeforStack* temp = s.top;
-   printf("%c",temp -> data.sign);
+   printf("= %c",temp -> data.sign);
    while(temp){
     Number go = temp -> data;
     while(go.num){
         printf("%d",go.num -> data);
-        // printf("Yes");
         go.num = go.num -> next;
     }
     printf("\n");
     temp = temp -> up;
    }
+    printf("\n");
 }
 
 Number getTopN(Stack s){
@@ -64,11 +64,12 @@ Number popN(Stack *s){
         return result;
     }
     NodeforStack* deleteNode = s -> top;
-    
     Number actualList = deleteNode -> data;
+
     // free(deleteNode);
     // display(actualList);
     s -> top = s -> top -> up;
+
     return actualList;
 }
 // Node* top(Stack);

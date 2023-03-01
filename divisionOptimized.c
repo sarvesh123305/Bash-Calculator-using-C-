@@ -59,25 +59,25 @@ Number divideOptimizedTwoLinkedLists(Number divident,Number divisor){
         //Then I subtract those number and continue the same
 
         while(divident.num){                           //while divident exists till then the division should be followed
-            append(&tdivident,divident.num -> data);    //tdivident is temporary divident
+            append(&tdivident.num,divident.num -> data);    //tdivident is temporary divident
             divident.num = divident.num -> next;
 
             for(int i = 0 ; i <= 9 ; i++){
                
                 initNumber(&tdivisor);                //When I traverse in the loop value of divisor is somewhere lost so at each iteration I 
-                List temp = divisor.num;                //reinit the divisor
-                while(temp){
-                    append(&tdivisor,temp -> data);
-                    temp = temp -> next;
+                Number temp = divisor;                //reinit the divisor
+                while(temp.num){
+                    append(&tdivisor.num,temp.num -> data);
+                    temp.num = temp.num -> next;
                 }
 
                 initNumber(&lastIterator);
-                append(&lastIterator,i > 0 ? i-1 : i);  //Keeping the track of last iterator as well which would be helpul in division at times
+                append(&lastIterator.num,i > 0 ? i-1 : i);  //Keeping the track of last iterator as well which would be helpul in division at times
                 initNumber(&iterator);
-                append(&iterator,i);
+                append(&iterator.num,i);
                 
                 tempMul = multiply(iterator,tdivisor);
-                ans = compareLinkedLists(tempMul,tdivident);
+                ans = compareLinkedLists(tempMul.num,tdivident.num);
                 //Compare list returns this
                 // 0 -> Number cant be divided
                 // 1 -> Numbers are equal
@@ -105,8 +105,8 @@ Number divideOptimizedTwoLinkedLists(Number divident,Number divisor){
             Number reInitingDivisor = divisor;                //Due to operations divisor track is lost somewhere hence reinitng divisor
             initNumber(&tdivisor);
             while(reInitingDivisor.num){
-                append(&tdivisor.num,reInitingDivisor -> data);
-                reInitingDivisor.num = reInitingDivisor,num -> next;
+                append(&tdivisor.num,reInitingDivisor.num -> data);
+                reInitingDivisor.num = reInitingDivisor.num -> next;
             }
 
                 if(ans == 1){
@@ -114,14 +114,14 @@ Number divideOptimizedTwoLinkedLists(Number divident,Number divisor){
                 }
                 else if(ans == 0 || ans == 11){
                     tempMul = multiply(lastIterator,tdivisor);       //Multiplying the tdivisor with last iterator
-                    tdivident -> sign = '+';                        //setting sign always to + as we can later fix the signs by rules
-                    tempMul -> sign = '+';
+                    // tdivident -> sign = '+';                        //setting sign always to + as we can later fix the signs by rules
+                    // tempMul -> sign = '+';
                     tempSub = subtractTwoLinkedLists(tdivident,tempMul);  //Subtracting temporary divident and temporary Multiplication
 
                     initNumber(&tdivident);           //Now difference is got so init temporary divident to 0 and adding difference to temporary divident
-                    while(tempSub){
-                        append(&tdivident,tempSub -> data);
-                        tempSub = tempSub -> next;
+                    while(tempSub.num){
+                        append(&tdivident.num,tempSub.num -> data);
+                        tempSub.num = tempSub.num -> next;
                     }
                 }
                 else if(flag){                  //if flag is set ,reset it and subtract the  numbers and reinitng temporary divident and adding diff to it

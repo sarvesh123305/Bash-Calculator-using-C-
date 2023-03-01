@@ -49,15 +49,15 @@ void reverse(List *L1){
 }
 
 
-void display(List head){
-    if(!head)
+void display(Number head){
+    if(!head.num)
     return ;
     printf("\n");
-    Node* temp = head;
-    printf("%c",head -> sign);
-    while(temp){
-        printf("%d",temp -> data);
-        temp = temp -> next;
+    Number temp = head;
+    printf("%c",temp.sign);
+    while(temp.num){
+        printf("%d",temp.num -> data);
+        temp.num = temp.num -> next;
     }
     printf("\n");
 

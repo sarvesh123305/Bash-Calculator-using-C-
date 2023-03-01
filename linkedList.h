@@ -5,7 +5,6 @@
 typedef struct Node{
     int data;
     struct Node *next;
-    char sign;
 }Node;
 
 typedef Node* List;
@@ -20,7 +19,7 @@ void initNumber(Number*);
 void initList(List* l);
 void append(List* head,int data);
 void reverse(List *L1);
-void display(List head);
+void display(Number head);
 int getSize(List head);
 Node* top(List head);
 int isEmptyLinkedList(List);

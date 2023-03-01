@@ -9,8 +9,17 @@ int isNumber(char ch){
     return (num <= 9 && num>=0);
 }
 
+
+int isOperator(char ch){
+     return ((ch == '+' || ch == '-' || ch == '/' || ch == '*' || ch == '(' || ch == ')'));
+}
+
 int isCharacter(char ch){
    return (ch >= 'a' && ch <= 'z' )|| (ch >= 'A' && ch <= 'Z');
+}
+
+int isAnythingOther(char ch){
+    return (isNumber(ch) && isOperator(ch));
 }
 
 int precedence(char symb){
@@ -43,13 +52,11 @@ int getAndReturnSignsOfNumber(Number a,Number b){
         return sign;
 }
 
-int isOperator(char ch){
-     return ((ch == '+' || ch == '-' || ch == '/' || ch == '*' || ch == '(' || ch == ')'));
-}
 Number applyOp(Number a, Number b, char op){
     Number result;
     initNumber(&result);  
         int detectOp = getAndReturnSignsOfNumber(a,b);
+        // printf("%d\n",detectOp);
     switch(op){
         case '+': 
                 if(detectOp == 1){
@@ -106,6 +113,7 @@ Number applyOp(Number a, Number b, char op){
                         }
                 break;
     }
+    return result;
 }
 void infixEvaluation(char *str){
 
@@ -127,6 +135,8 @@ void infixEvaluation(char *str){
     int n = count1;
     initStackN(&nStack);
     initStackC(&cStack,n);
+    int flag = 0;
+    int check = 0 ;
     for(int i = 0 ; i < count+1; i++){
         char ch = str[i];
         int num = ch - '0';
@@ -135,7 +145,7 @@ void infixEvaluation(char *str){
         continue;
 
         if(ch == '('){
-
+            check = 1;
             if(l1.num){
                 pushN(&nStack,l1);
                 initNumber(&l1);
@@ -145,7 +155,23 @@ void infixEvaluation(char *str){
         }
         
         else if(isNumber(ch)){
+          
             append(&l1.num,num);
+              if(l1.num && !l1.num -> next){
+            if(check == 2){
+                check = 0;
+                l1.sign = '-';
+            }
+            else
+            l1.sign = '+';
+            if(flag){
+                flag = 0;
+                l1.sign = '-';
+            }
+            else
+            l1.sign = '+';
+            }
+
         }
 
         else if(ch == ')'){
@@ -154,7 +180,6 @@ void infixEvaluation(char *str){
                 pushN(&nStack,l1);
                 initNumber(&l1);
             }
-
             while(!isEmptyC(cStack) && topC(cStack) != '(')
               {
                  if(getSizeOfStackN(nStack) < 2)
@@ -175,13 +200,27 @@ void infixEvaluation(char *str){
             if(!isEmptyC(cStack))
                 popC(&cStack);
         }
+        else if(isAnythingOther(ch)){
+                printf("Invalid Expression");
+                exit(0);
+        }
         else{
 
             if(l1.num){
                 pushN(&nStack,l1);
                 initNumber(&l1);
             }
-
+            if(i == 0 && (ch == '-'|| ch == '+') ){
+                if(ch == '-')
+                flag = 1;
+                continue;
+            }
+            if(check == 1){
+                if(ch == '-' || ch == '+'){
+                    check = 2;
+                    continue;
+                }
+            }
             while(topC(cStack) != ' ' && precedence(topC(cStack)) >= precedence(ch)){
                 if(getSizeOfStackN(nStack) < 2)
                 {

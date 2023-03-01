@@ -57,8 +57,6 @@ initNumber(&result);                                            //Initing result
 append(&result.num,0);
 
 for(int i = 0 ; i < n ; i++){
-   
-   exit(0);
         result = addTwoLinkedLists(answer[i],result);
 }
 removePreceedingZeros(&result.num);                                //Removing preeceding zeros and returning the answer
