@@ -5,6 +5,6 @@
 
 int isNumber(char ch);
 int precedence(char symb);
-Node* applyOp(Node*, Node*, char);
+Number applyOp(Number,Number, char);
 void infixEvaluation(char*);
 int isCharacter(char);

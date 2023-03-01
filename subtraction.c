@@ -3,22 +3,21 @@
 #include "subtraction.h"
 
 
+Number subtractTwoLinkedLists(Number L1,Number L2){
 
-List subtractTwoLinkedLists(List L1,List L2){
-
-    List L3;
-    initList(&L3);
+    Number L3;
+    initNumber(&L3);
 
     char sign = '+';
 
-    removePreceedingZeros(&L1);
-    removePreceedingZeros(&L2);
+    removePreceedingZeros(&L1.num);
+    removePreceedingZeros(&L2.num);
 
     //My Function is implemented with always subtracting smaller no from bigger no
     //So if first no is smaller we would swap nos 
 
-    int sizeOfList1 = getSize(L1);
-    int sizeOfList2 = getSize(L2);
+    int sizeOfList1 = getSize(L1.num);
+    int sizeOfList2 = getSize(L2.num);
 
     Node* head1 = NULL;
     Node* head2 = NULL;
@@ -28,17 +27,17 @@ List subtractTwoLinkedLists(List L1,List L2){
     if(sizeOfList2 > sizeOfList1){
         //negative answer
         sign = '-';
-        head1 = L2;
-        head2 = L1;
+        head1 = L2.num;
+        head2 = L1.num;
     }
     else if(sizeOfList1 > sizeOfList2){
-        head1 = L1;         // Indicates List 1 is greater
-        head2 = L2;
+        head1 = L1.num;         // Indicates List 1 is greater
+        head2 = L2.num;
     }
     else{
 
-        Node* temporary1 = L1;
-        Node* temporary2 = L2;
+        Node* temporary1 = L1.num;
+        Node* temporary2 = L2.num; 
 
         int flag = 0;
 
@@ -60,12 +59,12 @@ List subtractTwoLinkedLists(List L1,List L2){
 
         //By getting values of flag setting list 1 as greatest 
         if(flag == 1){
-            head1 = L1;
-            head2 = L2;
+            head1 = L1.num;
+            head2 = L2.num;
         }
         else {
-            head2 = L1;
-            head1 = L2;
+            head2 = L1.num;
+            head1 = L2.num;
         }
     }
     
@@ -98,17 +97,17 @@ List subtractTwoLinkedLists(List L1,List L2){
             // append(&L3,diff%10);
         // }
         // else{
-            append(&L3,diff%10);
+            append(&L3.num,diff%10);
         // }
 
         if(head1)
-            head1 = head1 -> next;
+            (head1)= (head1) -> next;
         if(head2)
-            head2 = head2 -> next;
+            (head2) = (head2) -> next;
       } 
-      reverse(&L3);
-      removePreceedingZeros(&L3);             //Removing preeceding zeros and setting sign
-      L3 -> sign = sign;
+      reverse(&L3.num);
+      removePreceedingZeros(&L3.num);             //Removing preeceding zeros and setting sign
+      L3.sign = sign;
       return L3;
 }
 

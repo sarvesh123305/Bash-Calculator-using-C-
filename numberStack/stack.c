@@ -15,32 +15,32 @@ void displayN(Stack s){
    return ;
 
    NodeforStack* temp = s.top;
-   printf("%c",temp -> data -> sign);
+   printf("%c",temp -> data.sign);
    while(temp){
-    Node* go = temp -> data;
-    while(go){
-        printf("%d",go -> data);
+    Number go = temp -> data;
+    while(go.num){
+        printf("%d",go.num -> data);
         // printf("Yes");
-        go = go -> next;
+        go.num = go.num -> next;
     }
     printf("\n");
     temp = temp -> up;
    }
 }
 
-Node* getTopN(Stack s){
-    Node* newnode = (Node*)malloc(sizeof(Node));
-    newnode -> data = -1;
-    newnode -> next = NULL;
+Number getTopN(Stack s){
+    Number newnode ;
+    newnode.num = (List)malloc(sizeof(Node));
+    newnode.num -> data = -1;
+    newnode.num -> next = NULL;
     if(!s.top)
     return newnode;
     return s.top -> data;
 }
 
 
-void pushN(Stack* s,Node* data){
+void pushN(Stack* s,Number data){
     
-
     NodeforStack* newnode = (NodeforStack*)malloc(sizeof(NodeforStack));
     newnode -> data = data;
     newnode -> up = NULL;
@@ -57,13 +57,15 @@ void pushN(Stack* s,Node* data){
     return ;
 }
 
-Node* popN(Stack *s){
+Number popN(Stack *s){
     if(isEmptyN(*s)){
-        return NULL;
+        Number result ;
+        initNumber(&result);
+        return result;
     }
     NodeforStack* deleteNode = s -> top;
     
-    Node* actualList = deleteNode -> data;
+    Number actualList = deleteNode -> data;
     // free(deleteNode);
     // display(actualList);
     s -> top = s -> top -> up;

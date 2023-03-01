@@ -4,6 +4,6 @@
 typedef struct Node Node;
 typedef Node* List;
 
-List subtractTwoLinkedLists(List L1,List L2);
+Number subtractTwoLinkedLists(Number L1,Number L2);
 #endif
 

@@ -154,3 +154,8 @@ int compareLinkedLists(List mulResult,List Number){
         }
     }
 }
+
+void initNumber(Number* number){
+    number -> sign = '+';
+    number -> num = NULL;
+}

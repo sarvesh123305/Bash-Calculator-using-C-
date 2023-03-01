@@ -1,3 +1,2 @@
 #include "linkedList.h"
-
-List addTwoLinkedLists(List L1,List L2);
+Number addTwoLinkedLists(Number L1,Number L2);

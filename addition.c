@@ -1,12 +1,12 @@
 #include "addition.h"
 #include<stdio.h>
 
-List addTwoLinkedLists(List L1,List L2){
-    List L3;
-    initList(&L3);
+Number addTwoLinkedLists(Number L1,Number L2){
+    Number L3;
+    initList(&L3.num);
 
-    Node* head1 = L1;
-    Node* head2 = L2;
+    List head1 = L1.num;
+    List head2 = L2.num;
 
     reverse(&head1);
     reverse(&head2);
@@ -24,7 +24,7 @@ List addTwoLinkedLists(List L1,List L2){
         
         sum = val1 + val2 + carry;
         
-        append(&L3,sum%10);
+        append(&L3.num,sum%10);
         carry = sum / 10 ;
 
         if(head1)
@@ -32,7 +32,7 @@ List addTwoLinkedLists(List L1,List L2){
         if(head2)
             head2 = head2 -> next;
       } 
-      reverse(&L3);
+      reverse(&L3.num);
       return L3;
 }
 

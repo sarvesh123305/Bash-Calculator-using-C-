@@ -2,4 +2,4 @@
 #include "addition.h"
 #include "subtraction.h"
 
-Node* multiply(Node*,Node*);
+Number multiply(Number,Number);

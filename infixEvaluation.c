@@ -28,12 +28,12 @@ int precedence(char symb){
 
 }
 
-int getAndReturnSignsOfNumber(Node* a,Node* b){
+int getAndReturnSignsOfNumber(Number a,Number b){
     int sign = 0;
-        if((a -> sign == '+' && b -> sign == '+')  ){     
+        if((a.sign == '+' && b.sign == '+')  ){     
             sign = 1;
             }               
-        else if((a -> sign == '-' && b -> sign == '+') || (a -> sign == '+' && b -> sign == '-'))
+        else if((a.sign == '-' && b.sign == '+') || (a.sign == '+' && b.sign == '-'))
         {
               sign = 2;
         }
@@ -46,43 +46,42 @@ int getAndReturnSignsOfNumber(Node* a,Node* b){
 int isOperator(char ch){
      return ((ch == '+' || ch == '-' || ch == '/' || ch == '*' || ch == '(' || ch == ')'));
 }
-Node* applyOp(Node* a, Node* b, char op){
-    List result;
-    initList(&result);  
+Number applyOp(Number a, Number b, char op){
+    Number result;
+    initNumber(&result);  
         int detectOp = getAndReturnSignsOfNumber(a,b);
     switch(op){
         case '+': 
                 if(detectOp == 1){
                     result = addTwoLinkedLists(a,b);
-                    result -> sign = '+';
+                    result.sign = '+';
                 }
                 else if(detectOp == 2){
                     result = subtractTwoLinkedLists(a,b);
                 }
                 else{
                     result = addTwoLinkedLists(a,b);
-                            result -> sign = '-';
+                            result.sign = '-';
                 }
                 break;
-
        
         case '-': 
                 if(detectOp == 1){
                     result = subtractTwoLinkedLists(a,b);
                 }
                 else if(detectOp == 2){
-                    if( a -> sign == '-'){
+                    if( a.sign == '-'){
                                 result = addTwoLinkedLists(a,b);
-                                result -> sign = '-';
+                                result.sign = '-';
                             }
                             else{
                                 result = addTwoLinkedLists(a,b);
-                                result -> sign = '+';
+                                result.sign = '+';
                             }
                 }
                 else{
                             result = addTwoLinkedLists(a,b);
-                            result -> sign = '-';
+                            result.sign = '-';
                         }
                 break;
 
@@ -90,20 +89,20 @@ Node* applyOp(Node* a, Node* b, char op){
         case '*': 
                 result = multiply(a,b); 
                 if(detectOp == 2){
-                            result -> sign = '-';
+                            result.sign = '-';
                 }
                 else{
-                    result -> sign = '+';
+                    result.sign = '+';
                 }
                 break;
                     
                 case '/': 
                     result =  divideOptimizedTwoLinkedLists(a,b);
                         if(detectOp == 2){
-                            result -> sign = '-';
+                            result.sign = '-';
                         }
                         else{
-                            result -> sign = '+';
+                            result.sign = '+';
                         }
                 break;
     }
@@ -113,10 +112,10 @@ void infixEvaluation(char *str){
     charStack cStack;
     Stack nStack;
 
-    List l1,l2,result;
-    initList(&l1);
-    initList(&l2);
-    initList(&result);
+    Number l1,l2,result;
+    initNumber(&l1);
+    initNumber(&l2);
+    initNumber(&result);
     
     int count = 0 , count1 = 0;
     for(int i = 0 ; str[i] != '\0' ; i++){
@@ -137,23 +136,23 @@ void infixEvaluation(char *str){
 
         if(ch == '('){
 
-            if(l1){
+            if(l1.num){
                 pushN(&nStack,l1);
-                initList(&l1);
+                initNumber(&l1);
             }
 
             pushC(&cStack,'(');
         }
         
         else if(isNumber(ch)){
-            append(&l1,num);
+            append(&l1.num,num);
         }
 
         else if(ch == ')'){
 
-            if(l1){
+            if(l1.num){
                 pushN(&nStack,l1);
-                initList(&l1);
+                initNumber(&l1);
             }
 
             while(!isEmptyC(cStack) && topC(cStack) != '(')
@@ -164,8 +163,8 @@ void infixEvaluation(char *str){
                     exit(0);
                 }
 
-                Node* val2 = popN(&nStack);
-                Node* val1 = popN(&nStack);
+                Number val2 = popN(&nStack);
+                Number val1 = popN(&nStack);
                  
                 char op = topC(cStack);
                 popC(&cStack);
@@ -178,9 +177,9 @@ void infixEvaluation(char *str){
         }
         else{
 
-            if(l1){
+            if(l1.num){
                 pushN(&nStack,l1);
-                initList(&l1);
+                initNumber(&l1);
             }
 
             while(topC(cStack) != ' ' && precedence(topC(cStack)) >= precedence(ch)){
@@ -190,8 +189,8 @@ void infixEvaluation(char *str){
                     exit(0);
                 }
 
-                Node* b = popN(&nStack);
-                Node* a = popN(&nStack);
+                Number b = popN(&nStack);
+                Number a = popN(&nStack);
 
                 char ch = popC(&cStack);
                 pushN(&nStack,applyOp(a,b,ch));
