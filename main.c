@@ -14,10 +14,10 @@ printf("\nBC 1.21  SARVESH KULKARNI - 142203012");
 
 }
 int main(){
+    system("clear");
     displayInformation();
 
     char str[MAX] = "";
-    char ab[] = "quit";
     int i = 0 ;
     
     while(1){
@@ -42,7 +42,7 @@ int main(){
         printf("\nThis is a Binary Calculator which can add very large numbers ");
         printf("Everything is represented via linked lists so it has the ability to perform operation like addition , subtraction ,multiplication and division of large number\n");
         printf("For more help you can use ");
-        printf("\n1)clear - clearing the screen \n2)quit/exit - quitting the bc\n\n");
+        printf("\n1)clear - clearing the screen \n2)quit/exit/Ctrl+C - quitting the bc\n\n");
         continue;
     }
 
