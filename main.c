@@ -14,7 +14,7 @@ printf("\nBC 1.21  SARVESH KULKARNI - 142203012");
 
 }
 int main(){
-    system("clear");
+    // system("clear");
     displayInformation();
 
     char str[MAX] = "";

@@ -50,6 +50,8 @@ int getAndReturnSignsOfNumber(Number a,Number b){
             sign = -1;
         }   
         return sign;
+
+        //-12-(+12)
 }
 
 Number applyOp(Number a, Number b, char op){
@@ -57,8 +59,10 @@ Number applyOp(Number a, Number b, char op){
     initNumber(&result);  
         int detectOp = getAndReturnSignsOfNumber(a,b);
         // printf("%d\n",detectOp);
+
     switch(op){
         case '+': 
+
                 if(detectOp == 1){
                     result = addTwoLinkedLists(a,b);
                     result.sign = '+';
@@ -221,6 +225,7 @@ void infixEvaluation(char *str){
                     continue;
                 }
             }
+
             while(topC(cStack) != ' ' && precedence(topC(cStack)) >= precedence(ch)){
                 if(getSizeOfStackN(nStack) < 2)
                 {
