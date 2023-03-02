@@ -15,16 +15,7 @@ void displayN(Stack s){
    return ;
 
    NodeforStack* temp = s.top;
-   printf("= %c",temp -> data.sign);
-   while(temp){
-    Number go = temp -> data;
-    while(go.num){
-        printf("%d",go.num -> data);
-        go.num = go.num -> next;
-    }
-    printf("\n");
-    temp = temp -> up;
-   }
+    display(temp -> data);
     printf("\n");
 }
 

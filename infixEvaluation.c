@@ -19,7 +19,7 @@ int isCharacter(char ch){
 }
 
 int isAnythingOther(char ch){
-    return (isNumber(ch) && isOperator(ch));
+    return (!isNumber(ch) || !isOperator(ch));
 }
 
 int precedence(char symb){
@@ -205,11 +205,10 @@ void infixEvaluation(char *str){
                 popC(&cStack);
         }
         else if(isAnythingOther(ch)){
-                printf("Invalid Expression");
+                printf("Invalid Operands\n");
                 exit(0);
         }
         else{
-
             if(l1.num){
                 pushN(&nStack,l1);
                 initNumber(&l1);

@@ -16,7 +16,6 @@ void append(List* head,int data){
     newnode -> data = data;
     newnode -> next = NULL;
     if(!(*head)){
-        newnode -> sign = '+';
         *head = newnode;
         return ;
     }
@@ -49,18 +48,20 @@ void reverse(List *L1){
 }
 
 
+void displayList(List head){
+    if(!head){
+        return ;
+    }
+    printf("%d",head -> data);
+    displayList(head -> next);
+}
 void display(Number head){
     if(!head.num)
     return ;
-    printf("\n");
     Number temp = head;
-    printf("%c",temp.sign);
-    while(temp.num){
-        printf("%d",temp.num -> data);
-        temp.num = temp.num -> next;
-    }
+    printf("= %c",temp.sign);
+    displayList(temp.num);
     printf("\n");
-
 }
 
 
