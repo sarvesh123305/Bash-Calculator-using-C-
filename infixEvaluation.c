@@ -77,7 +77,13 @@ Number applyOp(Number a, Number b, char op){
                 break;
        
         case '-': 
-                if(detectOp == 1){
+                 if(a.sign == '-' && b.sign == '-'){
+                    // a.sign = '+';
+                    b.sign = '+';
+                    result = subtractTwoLinkedLists(a,b);
+
+                 }
+                else if(detectOp == 1){
                     result = subtractTwoLinkedLists(a,b);
                 }
                 else if(detectOp == 2){
@@ -90,6 +96,8 @@ Number applyOp(Number a, Number b, char op){
                                 result.sign = '+';
                             }
                 }
+              
+
                 else{
                             result = addTwoLinkedLists(a,b);
                             result.sign = '-';
@@ -234,6 +242,8 @@ void infixEvaluation(char *str){
                 Number val2 = popN(&nStack);
                 Number val1 = popN(&nStack);
                  
+                //  printf("Signs %c %c",val1.sign,val2.sign);
+
                 char op = topC(cStack);
                 popC(&cStack);
                  
@@ -258,7 +268,6 @@ void infixEvaluation(char *str){
                 continue;
             }
             if(str[i-1] == '('){
-                    // printf("Aalas %c",ch);
                 if(ch == '-' ){
                     check = 2;
                     continue;
@@ -277,8 +286,10 @@ void infixEvaluation(char *str){
                 }
                 Number b = popN(&nStack);
                 Number a = popN(&nStack);
-                
+
+
                 // printf("%c %c",a.sign,b.sign);
+                // displayN(nStack);exit(0);
 
                 char ch = popC(&cStack);
                 pushN(&nStack,applyOp(a,b,ch));

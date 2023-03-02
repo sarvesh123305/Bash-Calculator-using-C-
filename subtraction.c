@@ -22,6 +22,7 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
     Node* head1 = NULL;
     Node* head2 = NULL;
 
+    int flag = 0;
     //Finding greater number with size and comparing bits of the list
 
     if(sizeOfList2 > sizeOfList1){
@@ -39,7 +40,6 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
         Node* temporary1 = L1.num;
         Node* temporary2 = L2.num; 
 
-        int flag = 0;
 
         while(temporary1 && temporary2){
             
@@ -110,7 +110,27 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
       reverse(&L3.num);
 
       removePreceedingZeros(&L3.num);             //Removing preeceding zeros and setting sign
-      L3.sign = sign;
+      if(flag == 1){
+        if(L1.sign == '+'){
+            L3.sign = '+';
+        }
+        else{
+            L3.sign = '-';
+
+        }
+      }
+      else if(flag == 2){
+         if(L2.sign == '+'){
+            L3.sign = '+';
+        }
+        else{
+            L3.sign = '-';
+        }
+      }
+      else{
+      L3.sign = '+';
+
+      }
       return L3;
 }
 
