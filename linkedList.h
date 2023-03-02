@@ -26,6 +26,9 @@ int isEmptyLinkedList(List);
 void removePreceedingZeros(List*);
 
 int compareLinkedLists(List,List);
+
+void freeNumber(Number*);
+// void freeList(List* );
   
 #endif
 

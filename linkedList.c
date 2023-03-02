@@ -160,3 +160,20 @@ void initNumber(Number* number){
     number -> sign = '+';
     number -> num = NULL;
 }
+
+void freeList(List* numberList){
+    while(numberList){
+        List* freeNode = numberList;
+        *(numberList) = (*numberList)-> next;
+        free(freeNode);
+    }
+}
+void freeNumber(Number* freenum){
+      List temp = freenum -> num;
+
+      while(temp){
+        List deleteNode = temp;
+        temp = temp -> next;
+        free(deleteNode);
+      }
+}

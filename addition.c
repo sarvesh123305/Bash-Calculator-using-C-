@@ -1,12 +1,9 @@
 #include "addition.h"
 #include<stdio.h>
 #include<stdlib.h>
-Number addTwoLinkedLists(Number L1,Number L2){
+Number addTwoLinkedLists(Number head1,Number head2){
     Number L3;
     initNumber(&L3);
-
-    Number head1 = L1;
-    Number head2 = L2;
 
     reverse(&head1.num);
     reverse(&head2.num);
@@ -32,6 +29,7 @@ Number addTwoLinkedLists(Number L1,Number L2){
         if(head2.num)
             head2.num = head2.num -> next;
       } 
+
       reverse(&L3.num);
       return L3;
 }

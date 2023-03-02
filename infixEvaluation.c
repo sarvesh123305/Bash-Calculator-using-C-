@@ -19,7 +19,7 @@ int isCharacter(char ch){
 }
 
 int isAnythingOther(char ch){
-    return (!isNumber(ch) || !isOperator(ch));
+   return (ch == '.' || ch == ',' || ch == ']' || ch == '['  );
 }
 
 int precedence(char symb){
@@ -139,7 +139,7 @@ void infixEvaluation(char *str){
     int n = count1;
     initStackN(&nStack);
     initStackC(&cStack,n);
-    int flag = 0;
+    int flag = -1;
     int check = 0 ;
     for(int i = 0 ; i < count+1; i++){
         char ch = str[i];
@@ -149,7 +149,21 @@ void infixEvaluation(char *str){
         continue;
 
         if(ch == '('){
-            check = 1;
+            // if(check == 2){
+            //     check = 0;
+            //     if(l1.sign == '-')
+            //     l1.sign = '+';
+            //     else
+            //     l1.sign = '-';
+            // }
+            // else if(check == 3){
+            //      check = 0;
+            //     if(l1.sign == '-')
+            //     l1.sign = '+';
+            //     else
+            //     l1.sign = '-';
+            // }
+            // check = 1;
             if(l1.num){
                 pushN(&nStack,l1);
                 initNumber(&l1);
@@ -162,18 +176,28 @@ void infixEvaluation(char *str){
           
             append(&l1.num,num);
               if(l1.num && !l1.num -> next){
-            if(check == 2){
-                check = 0;
+                if(check == 2){
+                    check = 0;
+                    if(l1.sign == '-' )
+                    l1.sign = '+';
+                    else
+                    l1.sign = '-';
+                   
+                }
+             else if(check == 3){
+                 check = 0;
+                if(l1.sign == '-')
                 l1.sign = '-';
+                else
+                l1.sign = '+';
             }
-            else
-            l1.sign = '+';
-            if(flag){
-                flag = 0;
-                l1.sign = '-';
-            }
-            else
-            l1.sign = '+';
+             else{
+                    check = 0;
+                }
+                if(flag == 1){
+                    flag = 0;
+                    l1.sign = '-';
+                }
             }
 
         }
@@ -183,6 +207,21 @@ void infixEvaluation(char *str){
             if(l1.num){
                 pushN(&nStack,l1);
                 initNumber(&l1);
+            }
+            if(i == 0 && (ch == '-'|| ch == '+') ){
+                if(ch == '-')
+                flag = 1;
+                continue;
+            }
+            if(str[i-1] == '('){
+                if(ch == '-' ){
+                    check = 2;
+                    continue;
+                }
+                else if( ch == '+'){
+                    check = 3;
+                    continue;
+                }
             }
             while(!isEmptyC(cStack) && topC(cStack) != '(')
               {
@@ -205,7 +244,7 @@ void infixEvaluation(char *str){
                 popC(&cStack);
         }
         else if(isAnythingOther(ch)){
-                printf("Invalid Operands\n");
+                printf("Invalid Operands Indide Anything Other\n");
                 exit(0);
         }
         else{
@@ -218,9 +257,14 @@ void infixEvaluation(char *str){
                 flag = 1;
                 continue;
             }
-            if(check == 1){
-                if(ch == '-' || ch == '+'){
+            if(str[i-1] == '('){
+                    // printf("Aalas %c",ch);
+                if(ch == '-' ){
                     check = 2;
+                    continue;
+                }
+                else if( ch == '+'){
+                    check = 3;
                     continue;
                 }
             }
@@ -231,9 +275,10 @@ void infixEvaluation(char *str){
                     printf("Invalid Operands");
                     exit(0);
                 }
-
                 Number b = popN(&nStack);
                 Number a = popN(&nStack);
+                
+                // printf("%c %c",a.sign,b.sign);
 
                 char ch = popC(&cStack);
                 pushN(&nStack,applyOp(a,b,ch));

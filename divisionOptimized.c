@@ -41,12 +41,10 @@ Number divideOptimizedTwoLinkedLists(Number divident,Number divisor){
             exit(0);
         }
 
-        Number tdivisor,result,tdivident,iterator,tempMul,tempAns,lastIterator,tempSub;
+        Number tdivisor,result,tdivident,iterator,tempAns;
         initNumber(&tdivisor);
         initNumber(&tdivident);       //Initing lists requied for division
-        initNumber(&tempMul);
         initNumber(&tempAns);
-        initNumber(&tempSub);
         initNumber(&result);
 
         
@@ -57,7 +55,7 @@ Number divideOptimizedTwoLinkedLists(Number divident,Number divisor){
         // i.e suppose number is 21456 / 21
         //I keep adding number digit by digit in temporary list and keep multiplying 21 from  0 -> 9
         //Then I subtract those number and continue the same
-
+Number temp;
         while(divident.num){                           //while divident exists till then the division should be followed
             append(&tdivident.num,divident.num -> data);    //tdivident is temporary divident
             divident.num = divident.num -> next;
@@ -65,39 +63,36 @@ Number divideOptimizedTwoLinkedLists(Number divident,Number divisor){
             for(int i = 0 ; i <= 9 ; i++){
                
                 initNumber(&tdivisor);                //When I traverse in the loop value of divisor is somewhere lost so at each iteration I 
-                Number temp = divisor;                //reinit the divisor
+                temp = divisor;                //reinit the divisor
                 while(temp.num){
                     append(&tdivisor.num,temp.num -> data);
                     temp.num = temp.num -> next;
                 }
 
-                initNumber(&lastIterator);
-                append(&lastIterator.num,i > 0 ? i-1 : i);  //Keeping the track of last iterator as well which would be helpul in division at times
                 initNumber(&iterator);
                 append(&iterator.num,i);
                 
-                tempMul = multiply(iterator,tdivisor);
-                ans = compareLinkedLists(tempMul.num,tdivident.num);
+                temp = multiply(iterator,tdivisor);
+                ans = compareLinkedLists(temp.num,tdivident.num);
                 //Compare list returns this
                 // 0 -> Number cant be divided
                 // 1 -> Numbers are equal
                 // 11 -> list 1 is bigger
                 // 22 -> list 2 is bigger
+                tempAns = iterator;
                 if(ans == 0){
-                    tempAns = lastIterator;             //Numbers cant be divided hence answer is last iterator
+                    iterator.num -> data -=1;     //Numbers cant be divided hence answer is last iterator
                     break;
                 }
                 else if(ans == 1){
-                    tempAns = iterator;                 //Number is perfectly divisible hence answer is current iterator
-                    break;
+                    break;               //Number is perfectly divisible hence answer is current iterator
                 }
                 else if(ans == 11){
-                    tempAns = lastIterator;             //List 1 is bigger hence answer is last iterator
+                    iterator.num -> data -=1;  // //List 1 is bigger hence answer is last iterator
                     break;
                 }
                 else if(i == 9){
                     flag = 1;                           //Now here number can be multiplied only by 9 at max so flag is set 
-                    tempAns = iterator;
                     break;
                 }
                 
@@ -113,36 +108,38 @@ Number divideOptimizedTwoLinkedLists(Number divident,Number divisor){
                     initNumber(&tdivident);               //Number is perfeclty divisble hence initing temporary divident to 0
                 }
                 else if(ans == 0 || ans == 11){
-                    tempMul = multiply(lastIterator,tdivisor);       //Multiplying the tdivisor with last iterator
+                           //Multiplying the tdivisor with last iterator
                     // tdivident -> sign = '+';                        //setting sign always to + as we can later fix the signs by rules
-                    // tempMul -> sign = '+';
-                    tempSub = subtractTwoLinkedLists(tdivident,tempMul);  //Subtracting temporary divident and temporary Multiplication
+                    temp = subtractTwoLinkedLists(tdivident,multiply(iterator,tdivisor));  //Subtracting temporary divident and temporary Multiplication
 
                     initNumber(&tdivident);           //Now difference is got so init temporary divident to 0 and adding difference to temporary divident
-                    while(tempSub.num){
-                        append(&tdivident.num,tempSub.num -> data);
-                        tempSub.num = tempSub.num -> next;
+                    while(temp.num){
+                        append(&tdivident.num,temp.num -> data);
+                        temp.num = temp.num -> next;
                     }
                 }
                 else if(flag){                  //if flag is set ,reset it and subtract the  numbers and reinitng temporary divident and adding diff to it
                     flag = 0;
-                    // tdivident.sign = '+';
-                    // tempMul.sign = '+';
-                    tempSub = subtractTwoLinkedLists(tdivident,tempMul);
+                    temp = subtractTwoLinkedLists(tdivident,temp);
 
                      initNumber(&tdivident);
-                    while(tempSub.num){
-                        append(&tdivident.num,tempSub.num -> data);
-                        tempSub.num = tempSub.num -> next;
+                    while(temp.num){
+                        append(&tdivident.num,temp.num -> data);
+                        temp.num = temp.num -> next;
                     }
                 }
                     append(&result.num ,tempAns.num -> data);
         }
 
+        freeNumber(&tdivisor);
+        freeNumber(&tdivident);
+        freeNumber(&iterator);
+        freeNumber(&divisor);
+        freeNumber(&divident);
+        freeNumber(&temp);
         removePreceedingZeros(&result.num);     //removing preeceding zeros and setting result sign
         result.sign = sign;      
         
     return result;
   
-    
 }

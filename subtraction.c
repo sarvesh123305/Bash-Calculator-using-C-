@@ -56,6 +56,7 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
             temporary1 = temporary1 -> next;
             temporary2 = temporary2 -> next;
         }
+        
 
         //By getting values of flag setting list 1 as greatest 
         if(flag == 1){
@@ -104,8 +105,10 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
             (head1)= (head1) -> next;
         if(head2)
             (head2) = (head2) -> next;
-      } 
+      }
+
       reverse(&L3.num);
+
       removePreceedingZeros(&L3.num);             //Removing preeceding zeros and setting sign
       L3.sign = sign;
       return L3;

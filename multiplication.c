@@ -2,17 +2,17 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-Number multiply(Number tempFirst,Number tempSecond){
-    Number first = tempFirst;
-    Number second = tempSecond;
+Number multiply(Number first,Number secondNo){
+    // Number first = tempFirst;
+    // Number second = tempSecond;
     reverse(&first.num);
-    reverse(&second.num);
+    reverse(&secondNo.num);
 
     Node* firstNo = first.num;
-    Node* secondNo = second.num;            //getting reversed Linked lists
+    // Node* secondNo = second.num;            //getting reversed Linked lists
 
 
-    int n = getSize(secondNo);
+    int n = getSize(secondNo.num);
 
     Number answer[n] ;                   //In multiplication we multiply each digit of second  number with first and later we add them
                                         //So here for result of each number we need linked list which I had taken array of list with size of second list
@@ -20,8 +20,8 @@ Number multiply(Number tempFirst,Number tempSecond){
     int carry = 0;
     int row = 0;
 
-    while(secondNo){
-
+    while(secondNo.num){
+        // freeList(&firstNo);
      firstNo = first.num;                               //Setting firstNo evertime in the loop , as we traverse firstNo so track if lost
      answer[row].num = (Node*)malloc(sizeof(Node));     //Alloting space for rows for multiplication of each digit
         initList(&answer[row].num);
@@ -32,7 +32,7 @@ Number multiply(Number tempFirst,Number tempSecond){
    
     while(firstNo){                                 //Keep repeating loop until firstNo exists
         
-        int sum = secondNo -> data * firstNo -> data + carry ;
+        int sum = secondNo.num -> data * firstNo -> data + carry ;
         carry = sum / 10;                                              //Seperating carry and using it for next iteration
         int digit = sum % 10;
         append(&answer[row].num,digit);
@@ -45,7 +45,7 @@ Number multiply(Number tempFirst,Number tempSecond){
     }
     
         row++;
-        secondNo = secondNo -> next;
+        secondNo.num = secondNo.num -> next;
 
 }
      for(int i = 0 ; i < n ; i++){
@@ -58,7 +58,9 @@ append(&result.num,0);
 
 for(int i = 0 ; i < n ; i++){
         result = addTwoLinkedLists(answer[i],result);
+        freeNumber(&answer[i]);
 }
+
 removePreceedingZeros(&result.num);                                //Removing preeceding zeros and returning the answer
 return result;
 }
