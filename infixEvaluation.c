@@ -2,7 +2,8 @@
 #include "characterStack/stack.h"
 #include "numberStack/stack.h"
 #include "multiplication.h"
-#include "divisionOptimized.h"
+// #include "divisionOptimized.h"
+#include "modulus.h"
 #include<stdlib.h>
 int isNumber(char ch){
     int num = ch - '0';
@@ -11,7 +12,7 @@ int isNumber(char ch){
 
 
 int isOperator(char ch){
-     return ((ch == '+' || ch == '-' || ch == '/' || ch == '*' || ch == '(' || ch == ')'));
+     return ((ch == '+' || ch == '-' || ch == '/' || ch == '*' || ch == '(' || ch == ')' || ch == '%'));
 }
 
 int isCharacter(char ch){
@@ -27,7 +28,7 @@ int precedence(char symb){
     if(symb == '(')
     return 0;
 
-    if(symb == '*' || symb == '/')
+    if(symb == '*' || symb == '/' || symb == '*')
     return 2;
 
     if(symb == '+' || symb == '-')
@@ -124,6 +125,9 @@ Number applyOp(Number a, Number b, char op){
                             result.sign = '+';
                         }
                 break;
+
+         case '%': result = modulusOfTwoLinkedLists(a,b);
+
     }
     return result;
 }

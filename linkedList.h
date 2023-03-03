@@ -29,6 +29,8 @@ int compareLinkedLists(List,List);
 
 void freeNumber(Number*);
 // void freeList(List* );
+Number copyNumber(Number num1);
+
   
 #endif
 

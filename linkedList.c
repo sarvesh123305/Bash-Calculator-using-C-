@@ -177,3 +177,15 @@ void freeNumber(Number* freenum){
         free(deleteNode);
       }
 }
+
+
+Number copyNumber(Number num1){
+        Number num3;
+        initNumber(&num3);
+
+        while(num1.num){
+            append(&num3.num,num1.num -> data);
+            num1.num = num1.num -> next;
+        }
+        return num3;
+}
