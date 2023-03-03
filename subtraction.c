@@ -2,13 +2,10 @@
 #include<stdlib.h>
 #include "subtraction.h"
 
-
 Number subtractTwoLinkedLists(Number L1,Number L2){
 
     Number L3;
     initNumber(&L3);
-
-    char sign = '+';
 
     removePreceedingZeros(&L1.num);
     removePreceedingZeros(&L2.num);
@@ -19,15 +16,14 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
     int sizeOfList1 = getSize(L1.num);
     int sizeOfList2 = getSize(L2.num);
 
-    Node* head1 = NULL;
-    Node* head2 = NULL;
+    List head1 = NULL;
+    List head2 = NULL;
 
     int flag = 0;
     //Finding greater number with size and comparing bits of the list
 
     if(sizeOfList2 > sizeOfList1){
         //negative answer
-        sign = '-';
         head1 = L2.num;
         head2 = L1.num;
     }
@@ -37,18 +33,16 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
     }
     else{
 
-        Node* temporary1 = L1.num;
-        Node* temporary2 = L2.num; 
-
+        List temporary1 = L1.num;
+        List temporary2 = L2.num; 
 
         while(temporary1 && temporary2){
             
             if(temporary1 -> data > temporary2 -> data){
-                    flag = 1;           // Indicates List 1 is greater// 
+                    flag = 1;           // Indicates List 1 is greater
                     break;
             }
             else if(temporary2 -> data > temporary1 -> data){
-                    sign = '-';
                     flag = 2;           // Indicates List 2 is greater so the answer is negative
                     break;
             }
@@ -57,7 +51,6 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
             temporary2 = temporary2 -> next;
         }
         
-
         //By getting values of flag setting list 1 as greatest 
         if(flag == 1){
             head1 = L1.num;
@@ -128,8 +121,7 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
         }
       }
       else{
-      L3.sign = '+';
-
+             L3.sign = '+';
       }
       return L3;
 }
