@@ -28,7 +28,7 @@ int precedence(char symb){
     if(symb == '(')
     return 0;
 
-    if(symb == '*' || symb == '/' || symb == '*')
+    if(symb == '*' || symb == '/' || symb == '%')
     return 2;
 
     if(symb == '+' || symb == '-')
@@ -127,8 +127,14 @@ Number applyOp(Number a, Number b, char op){
                 break;
 
          case '%': result = modulusOfTwoLinkedLists(a,b);
-
-    }
+                    if(detectOp == 2){
+                        result.sign = '-';
+                    }
+                    else{
+                        result.sign = '+';
+                    }
+                    break;
+    }   
     return result;
 }
 void infixEvaluation(char *str){

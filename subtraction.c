@@ -24,10 +24,12 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
 
     if(sizeOfList2 > sizeOfList1){
         //negative answer
+         flag = 2;
         head1 = L2.num;
         head2 = L1.num;
     }
     else if(sizeOfList1 > sizeOfList2){
+        flag = 1;
         head1 = L1.num;         // Indicates List 1 is greater
         head2 = L2.num;
     }
@@ -113,12 +115,13 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
         }
       }
       else if(flag == 2){
-         if(L2.sign == '+'){
-            L3.sign = '+';
-        }
-        else{
+    //   printf("%d",flag);
+        //  if(L2.sign == '+'){
             L3.sign = '-';
-        }
+        // }
+        // else{
+            // L3.sign = '+';
+        // }
       }
       else{
              L3.sign = '+';

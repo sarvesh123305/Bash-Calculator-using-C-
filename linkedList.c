@@ -59,7 +59,14 @@ void display(Number head){
     if(!head.num)
     return ;
     Number temp = head;
-    printf("= %c",temp.sign);
+    if(head.num && !head.num -> next && head.num -> data == 0){  // if Answer is 0 then set always set it as positive because 0 is never negative
+        temp.sign = '+';
+    }
+    
+    printf("= ");
+    if(temp.sign == '-')
+    printf(" %c",temp.sign);
+
     displayList(temp.num);
     printf("\n");
 }
