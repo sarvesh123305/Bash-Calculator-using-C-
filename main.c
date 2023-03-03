@@ -9,7 +9,7 @@ void displayInformation(){
 printf("\nBC 1.21  SARVESH KULKARNI - 142203012");
     printf("\nCopyright 2022 , Free Software Foundation under GNU");
     printf("\nThis is a free and open source software with ABSOLUTELY NO WARRANTY");
-    printf("\nOperations Supported - (+  -  /  * )\n");
+    printf("\nOperations Supported - (+  -  /  * %%)\n");
     printf("Use 'info' for more information\n");
 
 }
@@ -40,7 +40,7 @@ int main(){
 
     else if(strcmp(str,"info") ==  0){
         printf("\nThis is a Binary Calculator which can add very large numbers ");
-        printf("Everything is represented via linked lists so it has the ability to perform operation like addition , subtraction ,multiplication and division of large number\n");
+        printf("Everything is represented via linked lists so it has the ability to perform operation like addition , subtraction ,multiplication,modulus and division of large number\n");
         printf("For more help you can use ");
         printf("\n1)clear - clearing the screen \n2)quit/exit/Ctrl+C - quitting the bc\n\n");
         continue;
