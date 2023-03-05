@@ -89,12 +89,7 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
             diff = (val1 - val2 - temp);
             borrow = 1;
         }
-        // if(isEmptyLinkedList(L3)){
-            // append(&L3,diff%10);
-        // }
-        // else{
             append(&L3.num,diff%10);
-        // }
 
         if(head1)
             (head1)= (head1) -> next;
@@ -111,17 +106,14 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
         }
         else{
             L3.sign = '-';
-
         }
       }
       else if(flag == 2){
-    //   printf("%d",flag);
-        //  if(L2.sign == '+'){
+        if(L1.sign == '-' && L2.sign == '+'){
+            L3.sign = '+';
+        }
+        else
             L3.sign = '-';
-        // }
-        // else{
-            // L3.sign = '+';
-        // }
       }
       else{
              L3.sign = '+';

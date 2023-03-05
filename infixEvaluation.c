@@ -4,6 +4,8 @@
 #include "multiplication.h"
 // #include "divisionOptimized.h"
 #include "modulus.h"
+#include "power.h"
+
 #include<stdlib.h>
 int isNumber(char ch){
     int num = ch - '0';
@@ -12,7 +14,7 @@ int isNumber(char ch){
 
 
 int isOperator(char ch){
-     return ((ch == '+' || ch == '-' || ch == '/' || ch == '*' || ch == '(' || ch == ')' || ch == '%'));
+     return ((ch == '+' || ch == '-' || ch == '/' || ch == '*' || ch == '(' || ch == ')' || ch == '%' || ch == '^'));
 }
 
 int isCharacter(char ch){
@@ -27,6 +29,9 @@ int precedence(char symb){
 
     if(symb == '(')
     return 0;
+
+    if(symb == '^')
+    return 3;
 
     if(symb == '*' || symb == '/' || symb == '%')
     return 2;
@@ -52,14 +57,12 @@ int getAndReturnSignsOfNumber(Number a,Number b){
         }   
         return sign;
 
-        //-12-(+12)
 }
 
 Number applyOp(Number a, Number b, char op){
     Number result;
     initNumber(&result);  
         int detectOp = getAndReturnSignsOfNumber(a,b);
-        // printf("%d\n",detectOp);
 
     switch(op){
         case '+': 
@@ -79,7 +82,6 @@ Number applyOp(Number a, Number b, char op){
        
         case '-': 
                  if(a.sign == '-' && b.sign == '-'){
-                    // a.sign = '+';
                     b.sign = '+';
                     result = subtractTwoLinkedLists(a,b);
 
@@ -134,7 +136,11 @@ Number applyOp(Number a, Number b, char op){
                         result.sign = '+';
                     }
                     break;
+        case '^' : result = powerOfTwoLinkedLists(a,b);
+        
+                    break;
     }   
+    
     return result;
 }
 void infixEvaluation(char *str){
@@ -167,21 +173,7 @@ void infixEvaluation(char *str){
         continue;
 
         if(ch == '('){
-            // if(check == 2){
-            //     check = 0;
-            //     if(l1.sign == '-')
-            //     l1.sign = '+';
-            //     else
-            //     l1.sign = '-';
-            // }
-            // else if(check == 3){
-            //      check = 0;
-            //     if(l1.sign == '-')
-            //     l1.sign = '+';
-            //     else
-            //     l1.sign = '-';
-            // }
-            // check = 1;
+           
             if(l1.num){
                 pushN(&nStack,l1);
                 initNumber(&l1);
@@ -193,8 +185,13 @@ void infixEvaluation(char *str){
         else if(isNumber(ch)){
           
             append(&l1.num,num);
+            
               if(l1.num && !l1.num -> next){
-                if(check == 2){
+                if(flag == 1){
+                    flag = 0;
+                    l1.sign = '-';
+                }
+                else if(check == 2){
                     check = 0;
                     if(l1.sign == '-' )
                     l1.sign = '+';
@@ -212,10 +209,7 @@ void infixEvaluation(char *str){
              else{
                     check = 0;
                 }
-                if(flag == 1){
-                    flag = 0;
-                    l1.sign = '-';
-                }
+                
             }
 
         }
@@ -231,7 +225,7 @@ void infixEvaluation(char *str){
                 flag = 1;
                 continue;
             }
-            if(str[i-1] == '('){
+            else if(str[i-1] == '('){
                 if(ch == '-' ){
                     check = 2;
                     continue;
@@ -277,7 +271,7 @@ void infixEvaluation(char *str){
                 flag = 1;
                 continue;
             }
-            if(str[i-1] == '('){
+            else if(str[i-1] == '('){
                 if(ch == '-' ){
                     check = 2;
                     continue;

@@ -1,19 +1,19 @@
 
 **Project Name:-** Binary Calculator
-
+(project under GNU public license , copyright reserved 2022 (SARVESH KULKARNI) )
 ### DESCRIPTION :-  
 
-  * This is the **Calculator for infinite numbers** which is implemented using _C Programming language_.
+  * This is the **Calculator for countably infinite numbers** which is implemented using _C Programming language_.
   * It tries to implement some functionalities from unix based command **'bc'**.
   * It can perform operations only on decimal numbers with arbitary length*
-  
   ---
   * Operations performed on countably infinite length numbers are as follows:-
     * Addition
     * Substraction
     * Multiplication
     * Division
-    * Modulus  
+    * Modulus
+    * Power  
   ---
   * It evaluates the expression using **infix expression evaluation**
   * All expressions are evaluated according to their **_precedence_**.
@@ -21,15 +21,29 @@
   * Also multiple operators expressions are supported Eg : _(12-(-12)_*
   
   ---
-  
-### Execution Instruction :-  
 
- * Clone the repository on your machine.
+##Terminologies Used : 
+
+1)Operand and operator Stack
+2)Linked list
+3)ifndef directive
+3)Macro
+4)Different loops
+5)Makefile in linux
+6)Bash script 
+7)Array
+8)Pointers
+
+  
+### Execution Steps :-  
+
+ * Clone the repository on your machine using git clone or downloading zip.
  * Open **Terminal** and _change directory_ to the project directory.  
  * Type command ' **make** ' which will compile the required files and generate _executable file_.  
- * Then type the command ' **./binaryCalculator** '. 
+ * Then type the command ' **./binaryCalculator** '.
+  
 
   ---
-  
-  *If you find any modifications to the repo feel free to put a pull request or you can email me at sarvesh123305@gmail.com*
+  *Feel free to test it on multiple valid test cases*
+  *If you find any modifications,optimizations to the repository feel free to put a pull request or you can email me at sarvesh123305@gmail.com*
  
