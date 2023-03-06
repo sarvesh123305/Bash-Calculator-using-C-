@@ -1,6 +1,7 @@
 #ifndef POWER_H
 #define POWER_H
 #include "multiplication.h"
+#include "divisionOptimized.h"
 #include<stdio.h>
 #include<stdlib.h>
 #include "power.h"
@@ -20,7 +21,12 @@ Number powerOfTwoLinkedLists(Number first,Number second){
         if(second.num -> data % 2 == 0){
             flag = 0;
         }
-       
+
+        if(second.sign == '-'){
+            second.sign = '+';
+            result.num -> data = 0;
+            return result;
+        } 
         Number temp;
         Number staticSub ;
         initNumber(&staticSub);
@@ -34,7 +40,7 @@ Number powerOfTwoLinkedLists(Number first,Number second){
             iterator = subtractTwoLinkedLists(iterator,staticSub);
         }
 
-        if(flag == -1){
+        if(flag == -1 && first.sign == '-'){
             result.sign = '-';
         }
         return result;

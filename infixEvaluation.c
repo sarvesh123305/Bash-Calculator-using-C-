@@ -2,7 +2,6 @@
 #include "characterStack/stack.h"
 #include "numberStack/stack.h"
 #include "multiplication.h"
-// #include "divisionOptimized.h"
 #include "modulus.h"
 #include "power.h"
 
@@ -11,7 +10,6 @@ int isNumber(char ch){
     int num = ch - '0';
     return (num <= 9 && num>=0);
 }
-
 
 int isOperator(char ch){
      return ((ch == '+' || ch == '-' || ch == '/' || ch == '*' || ch == '(' || ch == ')' || ch == '%' || ch == '^'));
@@ -59,7 +57,7 @@ int getAndReturnSignsOfNumber(Number a,Number b){
 
 }
 
-Number applyOp(Number a, Number b, char op){
+Number applyOperand(Number a, Number b, char op){
     Number result;
     initNumber(&result);  
         int detectOp = getAndReturnSignsOfNumber(a,b);
@@ -118,7 +116,7 @@ Number applyOp(Number a, Number b, char op){
                 }
                 break;
                     
-                case '/': 
+        case '/': 
                     result =  divideOptimizedTwoLinkedLists(a,b);
                         if(detectOp == 2){
                             result.sign = '-';
@@ -163,12 +161,18 @@ void infixEvaluation(char *str){
     int n = count1;
     initStackN(&nStack);
     initStackC(&cStack,n);
-    int flag = -1;
+    // int flag = -1;
     int check = 0 ;
     for(int i = 0 ; i < count+1; i++){
         char ch = str[i];
         int num = ch - '0';
 
+        if(i == 0 && ch == '-' || ch == '+'){
+                Number temp;
+                initNumber(&temp);
+                append(&temp.num,0);
+                pushN(&nStack,temp);
+        }
         if(ch == ' ')
         continue;
 
@@ -187,11 +191,11 @@ void infixEvaluation(char *str){
             append(&l1.num,num);
             
               if(l1.num && !l1.num -> next){
-                if(flag == 1){
-                    flag = 0;
-                    l1.sign = '-';
-                }
-                else if(check == 2){
+                // if(flag == 1){
+                //     flag = 0;
+                //     l1.sign = '-';
+                // }
+                 if(check == 2){
                     check = 0;
                     if(l1.sign == '-' )
                     l1.sign = '+';
@@ -220,11 +224,15 @@ void infixEvaluation(char *str){
                 pushN(&nStack,l1);
                 initNumber(&l1);
             }
-            if(i == 0 && (ch == '-'|| ch == '+') ){
-                if(ch == '-')
-                flag = 1;
-                continue;
-            }
+            // if(i == 0 && (ch == '-'|| ch == '+') ){
+            //     Number temp;
+            //     initNumber(&temp);
+            //     append(&temp.num,0);
+            //     pushN(&nStack,temp);
+            //     // if(ch == '-')
+            //     // flag = 1;
+            //     continue;
+            // }
             else if(str[i-1] == '('){
                 if(ch == '-' ){
                     check = 2;
@@ -251,14 +259,14 @@ void infixEvaluation(char *str){
                 char op = topC(cStack);
                 popC(&cStack);
                  
-                pushN(&nStack,applyOp(val1,val2,op));
+                pushN(&nStack,applyOperand(val1,val2,op));
               }
              
             if(!isEmptyC(cStack))
                 popC(&cStack);
         }
         else if(isAnythingOther(ch)){
-                printf("Invalid Operands Indide Anything Other\n");
+                printf("Invalid\n");
                 exit(0);
         }
         else{
@@ -266,11 +274,15 @@ void infixEvaluation(char *str){
                 pushN(&nStack,l1);
                 initNumber(&l1);
             }
-            if(i == 0 && (ch == '-'|| ch == '+') ){
-                if(ch == '-')
-                flag = 1;
-                continue;
-            }
+            // if(i == 0 && (ch == '-'|| ch == '+') ){
+            //      Number temp;
+            //     initNumber(&temp);
+            //     append(&temp.num,0);
+            //     pushN(&nStack,temp);
+            //     // if(ch == '-')
+            //     // flag = 1;
+            //     continue;
+            // }
             else if(str[i-1] == '('){
                 if(ch == '-' ){
                     check = 2;
@@ -291,12 +303,8 @@ void infixEvaluation(char *str){
                 Number b = popN(&nStack);
                 Number a = popN(&nStack);
 
-
-                // printf("%c %c",a.sign,b.sign);
-                // displayN(nStack);exit(0);
-
                 char ch = popC(&cStack);
-                pushN(&nStack,applyOp(a,b,ch));
+                pushN(&nStack,applyOperand(a,b,ch));
             }
             pushC(&cStack,ch);
         }

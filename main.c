@@ -9,12 +9,12 @@ void displayInformation(){
 printf("\nBC 1.21  SARVESH KULKARNI - 142203012");
     printf("\nCopyright 2022 , Free Software Foundation under GNU");
     printf("\nThis is a free and open source software with ABSOLUTELY NO WARRANTY");
-    printf("\nOperations Supported - (+  -  /  * %%)\n");
+    printf("\nOperations Supported - (+  -  /  * %% ^)\n");
     printf("Use 'info' for more information\n");
 
 }
 int main(){
-    // system("clear");
+    system("clear");
     displayInformation();
 
     char str[MAX] = "";
@@ -60,4 +60,3 @@ int main(){
     }
     return 0;
 }
-//gcc main.c addition.c linkedList.c subtraction.c

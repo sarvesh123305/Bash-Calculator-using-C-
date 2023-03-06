@@ -16,6 +16,8 @@ Number addTwoLinkedLists(Number head1,Number head2){
     int val1 = 0 , val2 = 0 ;
         if(head1.num)
             val1 = head1.num -> data;
+    // 21*(12+21)
+    // 21*(12+21)
         if(head2.num)
             val2 = head2.num -> data;
         
