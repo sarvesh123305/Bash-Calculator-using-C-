@@ -1,6 +1,12 @@
 
 **Project Name:-** Binary Calculator
 (project under GNU public license , copyright reserved 2022 (SARVESH KULKARNI) )
+
+### IMPORTANT :-
+  * There are two branches in the repository : 
+  * 1) Main Branch : This branch contains , the earlier project which can perform operations with normal number  (no decimals)
+  * 2) BCUpgraded Branch : This branch contains , the newest project which can perform operations with decimal numbers.
+
 ### DESCRIPTION :-  
 
   * This is the **Calculator for countably infinite numbers** which is implemented using _C Programming language_.
@@ -44,6 +50,8 @@
   
 
   ---
-  *Feel free to test it on multiple valid test cases*
-  *If you find any modifications,optimizations to the repository feel free to put a pull request or you can email me at sarvesh123305@gmail.com*
+
+  * If you want to read and understand the code , for simplicity start reading it from main -> addition -> subtraction -> multiplication -> division -> modulus -> power -> infixEvaluation
+  * Feel free to test it on multiple valid test cases 
+  * If you find any modifications,optimizations to the repository feel free to put a pull request or you can email me at sarvesh123305@gmail.com*
  
