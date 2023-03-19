@@ -6,6 +6,7 @@
 #include "power.h"
 
 #include<stdlib.h>
+
 int isNumber(char ch){
     int num = ch - '0';
     return (num <= 9 && num>=0);
@@ -20,7 +21,7 @@ int isCharacter(char ch){
 }
 
 int isAnythingOther(char ch){
-   return (ch == '.' || ch == ',' || ch == ']' || ch == '['  );
+   return ( ch == ',' || ch == ']' || ch == '['  );
 }
 
 int precedence(char symb){
@@ -61,10 +62,12 @@ Number applyOperand(Number a, Number b, char op){
     Number result;
     initNumber(&result);  
         int detectOp = getAndReturnSignsOfNumber(a,b);
+    int flag = 0;
 
+    int dec  = 0;
     switch(op){
         case '+': 
-
+                dec = 1;
                 if(detectOp == 1){
                     result = addTwoLinkedLists(a,b);
                     result.sign = '+';
@@ -76,9 +79,11 @@ Number applyOperand(Number a, Number b, char op){
                     result = addTwoLinkedLists(a,b);
                             result.sign = '-';
                 }
+                
                 break;
        
         case '-': 
+                dec = 1;
                  if(a.sign == '-' && b.sign == '-'){
                     b.sign = '+';
                     result = subtractTwoLinkedLists(a,b);
@@ -107,6 +112,8 @@ Number applyOperand(Number a, Number b, char op){
 
         
         case '*': 
+                flag = 1;
+                dec = 3;
                 result = multiply(a,b); 
                 if(detectOp == 2){
                             result.sign = '-';
@@ -117,6 +124,7 @@ Number applyOperand(Number a, Number b, char op){
                 break;
                     
         case '/': 
+                    flag = 1;
                     result =  divideOptimizedTwoLinkedLists(a,b);
                         if(detectOp == 2){
                             result.sign = '-';
@@ -135,10 +143,28 @@ Number applyOperand(Number a, Number b, char op){
                     }
                     break;
         case '^' : result = powerOfTwoLinkedLists(a,b);
-        
+                    dec = 6;
                     break;
     }   
     
+
+    if(dec == 1){
+        int difference =  max(a.count - a.decimal , b.count - b.decimal);
+
+            if(a.decimal == a.count && b.decimal == b.count){
+                    result.decimal =result.count;
+            }
+            else{
+                    result.decimal = result.count - difference;
+            }
+    }
+    else if(dec == 3){
+        int getMax = max((a.count - a.decimal ),(b.count - b.decimal));
+        result.decimal = result.count - getMax;
+    }
+    else if(dec = 6){
+        result.decimal = result.count;
+    }
     return result;
 }
 void infixEvaluation(char *str){
@@ -161,41 +187,48 @@ void infixEvaluation(char *str){
     int n = count1;
     initStackN(&nStack);
     initStackC(&cStack,n);
-    // int flag = -1;
+    int flag = 0;
     int check = 0 ;
     for(int i = 0 ; i < count+1; i++){
         char ch = str[i];
         int num = ch - '0';
 
-        if(i == 0 && ch == '-' || ch == '+'){
+        if(i == 0 && (ch == '-' || ch == '+')){
                 Number temp;
                 initNumber(&temp);
-                append(&temp.num,0);
+                insertFront(&temp.num,0);
+                temp.count = temp.decimal = 1;
                 pushN(&nStack,temp);
         }
         if(ch == ' ')
         continue;
-
         if(ch == '('){
-           
-            if(l1.num){
-                pushN(&nStack,l1);
-                initNumber(&l1);
-            }
-
             pushC(&cStack,'(');
         }
-        
+    
         else if(isNumber(ch)){
-          
-            append(&l1.num,num);
-            
-              if(l1.num && !l1.num -> next){
-                // if(flag == 1){
-                //     flag = 0;
-                //     l1.sign = '-';
-                // }
-                 if(check == 2){
+            flag = 0;
+            while(isNumber(ch) || ch == '.'){
+                if(ch == '.')
+                {
+                  
+                    flag = 1;
+                    i++;
+                    ch = str[i];
+                    num = ch - '0';
+                    continue;
+                }
+
+                if(!flag){
+                    l1.decimal = l1.decimal + 1;
+                }
+                append(&l1.num,num);
+                i++;
+                ch = str[i];
+                num = ch - '0';
+                l1.count = l1.count + 1;
+            }
+             if(check == 2){
                     check = 0;
                     if(l1.sign == '-' )
                     l1.sign = '+';
@@ -213,27 +246,19 @@ void infixEvaluation(char *str){
              else{
                     check = 0;
                 }
-                
-            }
+            removeZerosFromFront(&l1);
+            reverse(&l1.num);
+            // display(l1);
+             pushN(&nStack,l1);
+             initNumber(&l1);
+            i--;
+            continue;
 
         }
 
         else if(ch == ')'){
 
-            if(l1.num){
-                pushN(&nStack,l1);
-                initNumber(&l1);
-            }
-            // if(i == 0 && (ch == '-'|| ch == '+') ){
-            //     Number temp;
-            //     initNumber(&temp);
-            //     append(&temp.num,0);
-            //     pushN(&nStack,temp);
-            //     // if(ch == '-')
-            //     // flag = 1;
-            //     continue;
-            // }
-            else if(str[i-1] == '('){
+            if(str[i-1] == '('){
                 if(ch == '-' ){
                     check = 2;
                     continue;
@@ -254,7 +279,7 @@ void infixEvaluation(char *str){
                 Number val2 = popN(&nStack);
                 Number val1 = popN(&nStack);
                  
-                //  printf("Signs %c %c",val1.sign,val2.sign);
+              
 
                 char op = topC(cStack);
                 popC(&cStack);
@@ -270,20 +295,8 @@ void infixEvaluation(char *str){
                 exit(0);
         }
         else{
-            if(l1.num){
-                pushN(&nStack,l1);
-                initNumber(&l1);
-            }
-            // if(i == 0 && (ch == '-'|| ch == '+') ){
-            //      Number temp;
-            //     initNumber(&temp);
-            //     append(&temp.num,0);
-            //     pushN(&nStack,temp);
-            //     // if(ch == '-')
-            //     // flag = 1;
-            //     continue;
-            // }
-            else if(str[i-1] == '('){
+       
+             if(str[i-1] == '('){
                 if(ch == '-' ){
                     check = 2;
                     continue;

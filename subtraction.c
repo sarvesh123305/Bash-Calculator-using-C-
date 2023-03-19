@@ -7,21 +7,29 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
     Number L3;
     initNumber(&L3);
 
-    removePreceedingZeros(&L1.num);
-    removePreceedingZeros(&L2.num);
-
     //My Function is implemented with always subtracting smaller no from bigger no
     //So if first no is smaller we would swap nos 
 
-    int sizeOfList1 = getSize(L1.num);
-    int sizeOfList2 = getSize(L2.num);
+     if(L1.count != L1.decimal || L2.count != L2.decimal){
+        AddingFrontAndBackDecimalsTillPoints(&L1,&L2);
+     }
+
+    L1 = reverseNumber(L1);
+    L2 = reverseNumber(L2);
+
+
+    int sizeOfList1 = (L1.count);
+    int sizeOfList2 = (L2.count);
+
 
     List head1 = NULL;
     List head2 = NULL;
 
     int flag = 0;
-    //Finding greater number with size and comparing bits of the list
-
+                                    //Finding greater number with size and comparing bits of the list
+                                    // AddingFrontAndBackDecimalsTillPoints(&L1,&L2);
+   
+    
     if(sizeOfList2 > sizeOfList1){
         //negative answer
          flag = 2;
@@ -63,9 +71,19 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
             head1 = L2.num;
         }
     }
+    L1 = reverseNumber(L1);
+    L2 = reverseNumber(L2);
+ 
+   
+     if(flag == 1){
+            head1 = L1.num;
+            head2 = L2.num;
+        }
+        else {
+            head2 = L1.num;
+            head1 = L2.num;
+        }
     
-    reverse(&head1);
-    reverse(&head2);
 
     int borrow = 0 ;
     int diff = 0 ;
@@ -89,7 +107,10 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
             diff = (val1 - val2 - temp);
             borrow = 1;
         }
-            append(&L3.num,diff%10);
+            insertFront(&L3.num,diff%10);
+            L3.count++;
+            L3.decimal++;
+
 
         if(head1)
             (head1)= (head1) -> next;
@@ -97,9 +118,7 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
             (head2) = (head2) -> next;
       }
 
-      reverse(&L3.num);
 
-      removePreceedingZeros(&L3.num);             //Removing preeceding zeros and setting sign
       if(flag == 1){
         if(L1.sign == '+'){
             L3.sign = '+';
@@ -118,6 +137,11 @@ Number subtractTwoLinkedLists(Number L1,Number L2){
       else{
              L3.sign = '+';
       }
+
+      setDecimalToResult(L1,L2,&L3);
+      
+      removeZerosFromFront(&L3);
+      reverse(&L3.num);
       return L3;
 }
 

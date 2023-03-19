@@ -17,9 +17,18 @@ int main(){
     system("clear");
     displayInformation();
 
+    //  char str[MAX] = "12.21^12";
+    //  printf("\n%s\n",str);
+        // infixEvaluation(str);
+// exit(0);
+
     char str[MAX] = "";
+    //  char str[MAX] = "809318230981+514513451*15441251312455315413/23412";
+
+
     int i = 0 ;
-    
+     
+
     while(1){
        
         fgets(str,MAX,stdin);

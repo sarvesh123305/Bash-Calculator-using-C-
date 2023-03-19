@@ -10,27 +10,27 @@ typedef Node* List;
 
 typedef struct Number{    
     char sign;
+    int decimal,count;
     List num;
 }Number;
 
 void initNumber(Number*);
-
-void initList(List* l);
+// void initList(List* l);
 void append(List* head,int data);
 void reverse(List *L1);
 void display(Number head);
-int getSize(List head);
-Node* top(List head);
-int isEmptyLinkedList(List);
-void removePreceedingZeros(List*);
-
+void removeZerosFromFront(Number*);
+void insertFront(List* head,int data);
 int compareLinkedLists(List,List);
-
 void freeNumber(Number*);
-// void freeList(List* );
 Number copyNumber(Number num1);
+void AddingFrontAndBackDecimalsTillPoints(Number*,Number*);
+// List reverseList(List L1);
+Number reverseNumber(Number number);
+void setDecimalToResult(Number L1,Number L2,Number *L3);
+int max(int a,int b);
+int isTheNumberZero(Number y);
 
-  
 #endif
 
 

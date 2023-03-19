@@ -2,46 +2,104 @@
 #define POWER_H
 #include "multiplication.h"
 #include "divisionOptimized.h"
+#include "modulus.h"
+
 #include<stdio.h>
 #include<stdlib.h>
 #include "power.h"
 #endif
 Number powerOfTwoLinkedLists(Number first,Number second){
-        removePreceedingZeros(&first.num);
-        removePreceedingZeros(&second.num);
 
-        int sizeOfList1 = getSize(first.num);
-        int sizeOfList2 = getSize(second.num);
+    //Optimized Approach in powerOptimized() function (Can calculate power upto 9000)
+    //#RECURSION
+            Number temp = second;
 
-        Number result;
-        initNumber(&result);
-        append(&result.num,1);
-
-        int flag = -1;
-        if(second.num -> data % 2 == 0){
-            flag = 0;
+        if(second.count != second.decimal){
+            int target = second.count - second.decimal;
+            second.count = second.decimal;
+            int i = 0 ; 
+            
+            while(temp.num -> next && target--){
+                temp.count--;
+                temp.num = temp.num -> next;
+            }
         }
+//            int ct = (first.count - first.decimal ) + (second.count - second.decimal);
+// int getMax = max((first.count - first.decimal ),(second.count - second.decimal));
+        first.decimal = first.count;
+// printf("Get Count :  %d %d \n",first.count,second.count);
+// printf(" Count :  %d \n",ct);
 
-        if(second.sign == '-'){
-            second.sign = '+';
-            result.num -> data = 0;
-            return result;
-        } 
-        Number temp;
-        Number staticSub ;
-        initNumber(&staticSub);
-        append(&staticSub.num,1);
-        Number iterator = second;
         
+        return   powerOptimized(first,temp);
 
-        while(iterator.num && iterator.num -> data != 0){
-            temp = copyNumber(first);
-            result = multiply(temp,result);
-            iterator = subtractTwoLinkedLists(iterator,staticSub);
-        }
+    //Brute force Approach (Limitation - Can calculate power upto 500 only) 
 
-        if(flag == -1 && first.sign == '-'){
-            result.sign = '-';
-        }
-        return result;
+        // int sizeOfList1 = getSize(first.num);
+        // int sizeOfList2 = getSize(second.num);
+
+        // Number result;
+        // initNumber(&result);
+        // append(&result.num,1);
+
+        // int flag = -1;
+        // if(second.num -> data % 2 == 0){
+        //     flag = 0;
+        // }
+
+        // if(second.sign == '-'){
+        //     second.sign = '+';
+        //     result.num -> data = 0;
+        //     return result;
+        // } 
+        // reverse(&second.num);
+
+
+        // Number temp;
+        // Number staticSub ;
+        // initNumber(&staticSub);
+        // append(&staticSub.num,1);
+        // staticSub.count = staticSub.decimal = 1;   
+        // Number iterator = second;
+        // iterator.count = iterator.decimal = second.count;   
+
+        // while(iterator.num && iterator.num -> data != 0){
+        //     temp = copyNumber(first);
+        //     temp.count = temp.decimal = first.count;
+        //     result = multiply(temp,result);
+        //     iterator = subtractTwoLinkedLists(reverseNumber(iterator),staticSub);
+        // }
+
+        // if(flag == -1 && first.sign == '-'){
+        //     result.sign = '-';
+        // }
+        // return result;
+}
+Number powerOptimized(Number x,Number y)
+{
+    
+    
+    if(isTheNumberZero(y)){
+        Number nowGo;
+        initNumber(&nowGo);
+        append(&nowGo.num,1);
+        return nowGo;
+    }
+
+      Number zero;
+    initNumber(&zero);
+    append(&zero.num,0);
+
+    Number staticNo;
+    initNumber(&staticNo);
+    append(&staticNo.num,2);
+    Number temp = powerOptimized(x,divideOptimizedTwoLinkedLists(y,staticNo));
+
+    Number result = modulusOfTwoLinkedLists(y,staticNo);
+    if(result.num -> data == zero.num -> data){
+        return multiply(temp,temp);
+    }
+    else{
+        return multiply(temp,multiply(x,temp));
+    }
 }

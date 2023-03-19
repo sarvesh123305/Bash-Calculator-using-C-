@@ -31,7 +31,6 @@ Number getTopN(Stack s){
 
 
 void pushN(Stack* s,Number data){
-    
     NodeforStack* newnode = (NodeforStack*)malloc(sizeof(NodeforStack));
     newnode -> data = data;
     newnode -> up = NULL;
