@@ -83,20 +83,18 @@ Number powerOptimized(Number x,Number y)
         Number nowGo;
         initNumber(&nowGo);
         append(&nowGo.num,1);
+        nowGo.count = nowGo.decimal = 1;
         return nowGo;
     }
-
-      Number zero;
-    initNumber(&zero);
-    append(&zero.num,0);
 
     Number staticNo;
     initNumber(&staticNo);
     append(&staticNo.num,2);
+    staticNo.count = staticNo.decimal = 1;
     Number temp = powerOptimized(x,divideOptimizedTwoLinkedLists(y,staticNo));
 
     Number result = modulusOfTwoLinkedLists(y,staticNo);
-    if(result.num -> data == zero.num -> data){
+    if(y.num -> data % 2 == 0){
         return multiply(temp,temp);
     }
     else{

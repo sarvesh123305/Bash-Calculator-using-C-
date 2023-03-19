@@ -347,7 +347,7 @@ int isTheNumberZero(Number y){//Check if number is 0
                             
     reverse(&y.num);
 
-    if(y.num && !y.num -> next && y.num -> data == 0){
+    if(y.num && y.count == 1 && y.decimal == 1 && y.num -> data == 0){
         return 1;
     }
     return 0;

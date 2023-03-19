@@ -7,7 +7,7 @@ Number multiply(Number first,Number secondNo){
     Node* firstNo = first.num;           //getting  Linked lists
 
 
-    int n = (secondNo.count);
+    int n = getSize(secondNo.num);
 
     Number answer[n] ;                   //In multiplication we multiply each digit of second  number with first and later we add them
                                         //So here for result of each number we need linked list which I had taken array of list with size of second list
