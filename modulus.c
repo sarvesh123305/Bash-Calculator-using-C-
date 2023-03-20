@@ -1,8 +1,6 @@
-
 #include "modulus.h"
 #include<stdlib.h>
 Number modulusOfTwoLinkedLists(Number firstNo,Number secondNo){
-
     
         Number temp = copyNumber(secondNo);
         Number temp1 = copyNumber(firstNo);

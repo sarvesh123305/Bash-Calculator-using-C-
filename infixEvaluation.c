@@ -248,12 +248,10 @@ void infixEvaluation(char *str){
                 }
             removeZerosFromFront(&l1);
             reverse(&l1.num);
-            // display(l1);
              pushN(&nStack,l1);
              initNumber(&l1);
             i--;
             continue;
-
         }
 
         else if(ch == ')'){

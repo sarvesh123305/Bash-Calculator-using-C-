@@ -94,7 +94,7 @@ Number powerOptimized(Number x,Number y)
     Number temp = powerOptimized(x,divideOptimizedTwoLinkedLists(y,staticNo));
 
     Number result = modulusOfTwoLinkedLists(y,staticNo);
-    if(y.num -> data % 2 == 0){
+    if(y.num -> data & 1 == 0){
         return multiply(temp,temp);
     }
     else{

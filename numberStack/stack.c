@@ -2,7 +2,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
 void initStackN(Stack* s){
     s -> top = NULL;
 }
@@ -56,13 +55,12 @@ Number popN(Stack *s){
     NodeforStack* deleteNode = s -> top;
     Number actualList = deleteNode -> data;
 
-    // free(deleteNode);
+    free(deleteNode);
     // display(actualList);
     s -> top = s -> top -> up;
 
     return actualList;
 }
-// Node* top(Stack);
 
 int getSizeOfStackN(Stack s){
     if(isEmptyN(s))

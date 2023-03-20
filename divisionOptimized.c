@@ -62,6 +62,7 @@ Number divideOptimizedTwoLinkedLists(Number divident,Number divisor){
         Number temp;
         initNumber(&temp);
 
+
          //LOGIC : I have used the method of divident,divisor,quotient and remainder
         // i.e suppose number is 21456 / 21
         //I keep adding number digit by digit in temporary list and keep multiplying 21 from  0 -> 9
